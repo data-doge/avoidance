@@ -8,7 +8,8 @@ function Bot (params) {
     width: this.scale,
     height: this.scale,
     top: this.r,
-    left: this.c
+    left: this.c,
+    background: _.sample(["#F6F792", "#77C4D3", "#DAEDE2", "#EA2E49", "#FFFFFF"])
   });
 }
 
