@@ -25,6 +25,8 @@ Bot.prototype.currentDirection = function () {
 
 Bot.prototype.changeDirection = function () {
   this.directions.rotate();
+  // var self = this;
+  // this.directions = _.shuffle(self.directions);
 };
 
 Bot.prototype.nextCoords = function () {
