@@ -13,7 +13,7 @@ class Landscape
 
   def add_bot(bot)
     @bots << bot
-    @grid[bot.y][bot.x] = bot
+    @grid[bot.r][bot.c] = bot
   end
 
   def update_position_for(bot)
@@ -21,9 +21,9 @@ class Landscape
       if bot.is_about_to_collide?
         bot.change_direction!
       else
-        @grid[bot.y][bot.x] = nil
+        @grid[bot.r][bot.c] = nil
         bot.move_forward!
-        @grid[bot.y][bot.x] = bot
+        @grid[bot.r][bot.c] = bot
         break
       end
     end
@@ -39,32 +39,35 @@ class Landscape
     system('clear')
     @grid.each do |row|
       print "|"
-      row.each { |bot| print (bot ? "X|" : " |") }
+      row.each { |bot| print (bot ? "#{bot.marker}|" : " |") }
       puts
     end
   end
 end
 
 class Bot
-  attr_reader :x, :y, :landscape
+  attr_reader :c, :r, :landscape, :marker
 
-  def initialize(direction: "right", x: 0, y: 0, landscape:)
+  def initialize(params = {})
     @speed = 1
-    @x = x
-    @y = y
-    @landscape = landscape
+    @c = params[:c] || 0
+    @r = params[:r] || 0
+    @landscape = params[:landscape]
+    @marker = params[:marker] || "X"
     @directions = ["up", "right", "down", "left"]
+    direction = params[:direction] || @directions.sample
+    change_direction! until current_direction == direction
   end
 
   def next_coords
-    dx, dy = 0, 0
+    dc, dr = 0, 0
     case current_direction
-      when "up" then dy = -1
-      when "right" then dx = 1
-      when "down" then dy = 1
-      when "left" then dx = -1
+      when "up" then dr = -1
+      when "right" then dc = 1
+      when "down" then dr = 1
+      when "left" then dc = -1
     end
-    {x: @x + dx, y: @y + dy}
+    {c: @c + dc, r: @r + dr}
   end
 
   def change_direction!
@@ -76,22 +79,30 @@ class Bot
   end
 
   def is_about_to_collide?
-    x = next_coords[:x]
-    y = next_coords[:y]
-    y > @landscape.height - 1 || y < 0 || x > @landscape.width - 1 || x < 0
+    c = next_coords[:c]
+    r = next_coords[:r]
+    r > @landscape.height - 1 || r < 0 || c > @landscape.width - 1 || c < 0 || @landscape.grid[r][c]
   end
 
   def move_forward!
-    @x = next_coords[:x]
-    @y = next_coords[:y]
+    @c = next_coords[:c]
+    @r = next_coords[:r]
   end
 end
 
 landscape = Landscape.new(width: 50, height: 50)
-bot = Bot.new(x: 5, y: 5, landscape: landscape)
-landscape.add_bot(bot)
-bot = Bot.new(x: 4, y: 2, landscape: landscape)
-landscape.add_bot(bot)
+coords = []
+landscape.height.times do |r|
+  landscape.width.times do |c|
+    coords << {r: r, c: c}
+  end
+end
+
+markers = ("A".."Z").to_a
+coords.shuffle.first(500).each do |coord|
+  bot = Bot.new(c: coord[:c], r: coord[:r], marker: markers.sample, landscape: landscape)
+  landscape.add_bot(bot)
+end
 
 while true
   # byebug
