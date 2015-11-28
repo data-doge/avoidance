@@ -2,6 +2,7 @@ function Landscape (params) {
   this.height = params.height;
   this.width = params.width;
   this.densityPercent = params.densityPercent;
+  this.scale = params.scale || 2;
   this.$element = $('#landscape');
   this.initializeGrid();
   this.initializeBots();
@@ -55,10 +56,17 @@ Landscape.prototype.updatePositionFor = function (bot) {
 
 Landscape.prototype.render = function () {
   this.$element.css({
-    width: this.width,
-    height: this.height
+    width: this.width * this.scale,
+    height: this.height * this.scale
   });
   _.each(this.bots, function (bot) {
     bot.render();
+  });
+};
+
+Landscape.prototype.updateFrame = function () {
+  var self = this;
+  _.each(this.bots, function (bot) {
+    self.updatePositionFor(bot);
   });
 };

@@ -2,8 +2,11 @@ function Bot (params) {
   this.c = params.c;
   this.r = params.r;
   this.directions = ['up', 'right', 'down', 'left'];
-  this.initializeDirection(params.direction || 'right');
+  this.initializeDirection(params.direction || _.sample(this.directions));
+  this.scale = params.scale || 2;
   this.$element = $('<div class="bot"></div>').css({
+    width: this.scale,
+    height: this.scale,
     top: this.r,
     left: this.c
   });
@@ -46,6 +49,10 @@ Bot.prototype.moveForward = function () {
   var coords = this.nextCoords();
   this.c = coords.c;
   this.r = coords.r;
+  this.$element.css({
+    top: this.r * this.scale,
+    left: this.c * this.scale
+  });
 };
 
 Bot.prototype.render = function () {
