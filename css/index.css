@@ -4,8 +4,16 @@ html, body {
   background: black;
 }
 
+#landscape {
+  position: relative;
+  margin: 0 auto;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 .bot {
   position: absolute;
   width: 1px;
   height: 1px;
+  background: white;
 }
