@@ -1,5 +1,3 @@
-require 'byebug'
-
 class Landscape
   attr_reader :height, :width, :bots
   attr_accessor :grid
@@ -55,6 +53,7 @@ class Bot
     @landscape = params[:landscape]
     @marker = params[:marker] || "X"
     @directions = ["up", "right", "down", "left"]
+    @algorithm = params[:algorithm] || "right"
     direction = params[:direction] || @directions.sample
     change_direction! until current_direction == direction
   end
@@ -71,7 +70,10 @@ class Bot
   end
 
   def change_direction!
-    @directions.rotate!
+    case @algorithm
+    when "right" then @directions.rotate!
+    when "random" then @directions.shuffle!
+    end
   end
 
   def current_direction
@@ -90,6 +92,8 @@ class Bot
   end
 end
 
+num_of_bots = 10
+
 landscape = Landscape.new(width: 50, height: 50)
 coords = []
 landscape.height.times do |r|
@@ -99,14 +103,14 @@ landscape.height.times do |r|
 end
 
 markers = ("A".."Z").to_a
-coords.shuffle.first(500).each do |coord|
-  bot = Bot.new(c: coord[:c], r: coord[:r], marker: markers.sample, landscape: landscape)
+coords.shuffle.first(num_of_bots).each do |coord|
+  bot = Bot.new(c: coord[:c], r: coord[:r], marker: markers.sample, landscape: landscape, algorithm: "random")
   landscape.add_bot(bot)
 end
 
 while true
-  # byebug
   landscape.render_frame
   landscape.prepare_frame
-  sleep(0.05)
+  # gets
+  sleep(0.04)
 end
