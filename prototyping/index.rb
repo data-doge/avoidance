@@ -47,7 +47,6 @@ class Bot
   attr_reader :c, :r, :landscape, :marker
 
   def initialize(params = {})
-    @speed = 1
     @c = params[:c] || 0
     @r = params[:r] || 0
     @landscape = params[:landscape]
