@@ -5,6 +5,7 @@ function Landscape (params) {
   this.scale = params.scale || 2;
   this.$element = $('#landscape');
   this.initializeGrid();
+  this.initializePotentialCoords();
   this.initializeBots();
   this.render();
 }
@@ -15,30 +16,33 @@ Landscape.prototype.initializeGrid = function () {
   });
 };
 
-Landscape.prototype.initializeBots = function () {
-  var allCoords = [];
+Landscape.prototype.initializePotentialCoords = function () {
+  this.potentialCoords = [];
   var self = this;
   _.times(self.height, function (r) {
     _.times(self.width, function (c) {
-      allCoords.push({r: r, c: c});
+      self.potentialCoords.push({r: r, c: c});
     });
   });
+};
 
-  var numOfBots = parseInt(allCoords.length * this.densityPercent / 100);
-  var activeCoords = _.take(_.shuffle(allCoords), numOfBots);
-
-  this.bots = []
+Landscape.prototype.initializeBots = function () {
   var self = this;
+  var numOfBots = parseInt(self.potentialCoords.length * this.densityPercent / 100);
+  var activeCoords = _.take(_.shuffle(self.potentialCoords), numOfBots);
+  this.bots = []
   _.each(activeCoords, function (coord) {
     self.addBot({c: coord.c, r: coord.r});
   });
 };
 
 Landscape.prototype.addBot = function (params) {
+  params = params || _.sample(this.potentialCoords);
   var bot = new Bot(params);
   bot.landscape = this;
   this.bots.push(bot)
   this.grid[bot.r][bot.c] = bot
+  bot.render();
 };
 
 Landscape.prototype.updatePositionFor = function (bot) {
@@ -58,9 +62,6 @@ Landscape.prototype.render = function () {
   this.$element.css({
     width: this.width * this.scale,
     height: this.height * this.scale
-  });
-  _.each(this.bots, function (bot) {
-    bot.render();
   });
 };
 
