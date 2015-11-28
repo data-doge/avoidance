@@ -2,7 +2,7 @@ function Landscape (params) {
   this.height = params.height;
   this.width = params.width;
   this.densityPercent = params.densityPercent;
-  this.scale = params.scale || 2;
+  this.scale = params.scale || 1;
   this.$element = $('#landscape');
   this.initializeGrid();
   this.initializePotentialCoords();
@@ -37,8 +37,9 @@ Landscape.prototype.initializeBots = function () {
 };
 
 Landscape.prototype.addBot = function (params) {
+  var self = this;
   params = params || _.sample(this.potentialCoords);
-  var bot = new Bot(params);
+  var bot = new Bot(_.merge(params, {scale: this.scale}));
   bot.landscape = this;
   this.bots.push(bot)
   this.grid[bot.r][bot.c] = bot
@@ -61,7 +62,7 @@ Landscape.prototype.updatePositionFor = function (bot) {
 Landscape.prototype.render = function () {
   this.$element.css({
     width: this.width * this.scale,
-    height: this.height * this.scale
+    height: this.height * this.scale,
   });
 };
 

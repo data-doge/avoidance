@@ -3,7 +3,7 @@ function Bot (params) {
   this.r = params.r;
   this.directions = ['up', 'right', 'down', 'left'];
   this.initializeDirection(params.direction || _.sample(this.directions));
-  this.scale = params.scale || 2;
+  this.scale = params.scale;
   this.$element = $('<div class="bot"></div>').css({
     width: this.scale,
     height: this.scale,
