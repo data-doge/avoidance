@@ -2,6 +2,7 @@ html, body {
   position: relative;
   height: 100%;
   background: black;
+  font-family: 'Roboto', sans-serif;
 }
 
 #landscape {
@@ -11,8 +12,18 @@ html, body {
   transform: translateY(-50%);
 }
 
+.container {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  letter-spacing: 2px;
+  font-size: 12px;
+  bottom: 70px;
+  text-align: center;
+}
+
 .bot {
   position: absolute;
   border-radius: 50%;
-  background: white;
 }

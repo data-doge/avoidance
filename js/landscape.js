@@ -4,6 +4,9 @@ function Landscape (params) {
   this.densityPercent = params.densityPercent;
   this.scale = params.scale || 1;
   this.$element = $('#landscape');
+  this.$botCounter = $('#bot-count');
+  this.$collisionAvoidedCounter = $('#collisions-avoided-count');
+  this.collisionsAvoided = 0;
   this.initializeGrid();
   this.initializePotentialCoords();
   this.initializeBots();
@@ -44,12 +47,15 @@ Landscape.prototype.addBot = function (params) {
   this.bots.push(bot)
   this.grid[bot.r][bot.c] = bot
   bot.render();
+  this.$botCounter.text(this.bots.length);
 };
 
 Landscape.prototype.updatePositionFor = function (bot) {
   for (var i = 0; i < 4; i++) {
     if (bot.isAboutToCollide()) {
       bot.changeDirection();
+      this.collisionsAvoided++;
+      this.$collisionAvoidedCounter.text(this.collisionsAvoided);
     } else {
       this.grid[bot.r][bot.c] = null;
       bot.moveForward();
