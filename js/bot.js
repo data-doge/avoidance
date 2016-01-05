@@ -10,7 +10,7 @@ function Bot (params) {
     height: this.size,
     top: this.r,
     left: this.c,
-    background: 'white'
+    background: _.sample(["#F6F792", "#77C4D3", "#DAEDE2", "#EA2E49", "#FFFFFF"])
   });
 }
 
