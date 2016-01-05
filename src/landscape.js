@@ -7,28 +7,42 @@ var randomInt = require('random-int')
 
 var Landscape = stampit({
   init: function () {
-    this.$element = $('#landscape')
+    this.$canvas = $('<canvas></canvas>')
+    this.ctx = this.$canvas[0].getContext('2d')
+    this.prepareCanvas()
     this.$botCounter = $('#bot-count')
     this.$collisionAvoidedCounter = $('#collisions-avoided-count')
     this.collisionsAvoided = 0
     this.grid = new Fixed2DArray(this.height, this.width, null)
     this.bots = []
     this.initializeBots()
-    this.render()
   },
   methods: {
+    addBot: function () {
+      var bot = Bot(_.merge(this.getRandCoords(), {landscape: this}))
+      this.bots.push(bot)
+      this.grid.set(bot.r, bot.c, bot)
+      bot.render()
+      this.$botCounter.text(this.bots.length)
+    },
+    updateFrame: function () {
+      // this.ctx.clearRect(0,0,this.width * this.scale, this.height * this.scale)
+      _.each(this.bots, this.updatePositionFor.bind(this))
+    },
+
+    // private
+    prepareCanvas: function () {
+      this.$canvas.attr('width', this.width * this.scale)
+                  .attr('height', this.height * this.scale)
+      $('body').prepend(this.$canvas)
+    },
     initializeBots: function () {
       var numOfCells = this.width * this.height
       var numOfBots = parseInt(numOfCells * this.densityPercent / 100)
       _.times(numOfBots, this.addBot.bind(this))
     },
-    addBot: function () {
-      var bot = Bot(_.merge(this.getRandCoords(), {scale: this.scale}))
-      bot.landscape = this
-      this.bots.push(bot)
-      this.grid.set(bot.r, bot.c, bot)
-      bot.render()
-      this.$botCounter.text(this.bots.length)
+    getRandCoords: function () {
+      return { r: randomInt(this.height - 1), c: randomInt(this.width - 1) }
     },
     updatePositionFor: function (bot) {
       for (var i = 0; i < 4; i++) {
@@ -44,18 +58,7 @@ var Landscape = stampit({
           break
         }
       }
-    },
-    render: function () {
-      this.$element.css({
-        width: this.width * this.scale,
-        height: this.height * this.scale,
-      })
-    },
-    updateFrame: function () {
-      _.each(this.bots, this.updatePositionFor.bind(this))
-    },
-    getRandCoords: function () {
-      return { r: randomInt(this.height - 1), c: randomInt(this.width - 1) }
+      bot.render()
     }
   }
 })

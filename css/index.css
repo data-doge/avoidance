@@ -5,8 +5,9 @@ html, body {
   font-family: 'Roboto', sans-serif;
 }
 
-#landscape {
+canvas {
   position: relative;
+  display: block;
   margin: 0 auto;
   top: 50%;
   transform: translateY(-50%);
