@@ -5,12 +5,6 @@ var $ = require('jquery')
 var Bot = require('./bot')
 
 var Landscape = stampit({
-  refs: {
-    width: 50,
-    height: 50,
-    densityPercent: 0,
-    scale: 10
-  },
   init: function () {
     this.$element = $('#landscape')
     this.$botCounter = $('#bot-count')
