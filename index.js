@@ -1,7 +1,7 @@
 var $ = require('jquery')
 var Landscape = require('./js/landscape')
 
-var landscape = Landscape({width: 50, height: 50, densityPercent: 0, scale: 10})
+var landscape = Landscape({width: 50, height: 50, densityPercent: 20, scale: 10})
 
 $(document).on('keypress', function (e) {
   landscape.addBot()
