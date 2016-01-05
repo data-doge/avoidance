@@ -1,4 +1,5 @@
 var stampit = require('stampit')
+var Fixed2DArray = require('fixed-2d-array')
 var _ = require('lodash')
 var $ = require('jquery')
 var Bot = require('./bot')
@@ -22,9 +23,7 @@ var Landscape = stampit({
   },
   methods: {
     initializeGrid: function () {
-      this.grid = _.map(new Array(this.height), function () {
-        return new Array(this.width);
-      })
+      this.grid = new Fixed2DArray(this.height, this.width, null)
     },
     initializePotentialCoords: function () {
       this.potentialCoords = []
@@ -50,7 +49,7 @@ var Landscape = stampit({
       var bot = new Bot(_.merge(params, {scale: this.scale}));
       bot.landscape = this;
       this.bots.push(bot)
-      this.grid[bot.r][bot.c] = bot
+      this.grid.set(bot.r, bot.c, bot)
       bot.render();
       this.$botCounter.text(this.bots.length);
     },
@@ -59,15 +58,14 @@ var Landscape = stampit({
         if (bot.isAboutToCollide()) {
           bot.changeDirection();
           if (bot.isAlive()) {
-            console.log('callled')
             bot.dieSlowly();
           }
           this.collisionsAvoided++;
           this.$collisionAvoidedCounter.text(this.collisionsAvoided);
         } else {
-          this.grid[bot.r][bot.c] = null;
+          this.grid.set(bot.r, bot.c, null)
           bot.moveForward();
-          this.grid[bot.r][bot.c] = bot;
+          this.grid.set(bot.r, bot.c, bot)
           break;
         }
       }

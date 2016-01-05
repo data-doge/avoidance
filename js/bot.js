@@ -44,7 +44,7 @@ var Bot = stampit({
       var coords = this.nextCoords();
       return !_.inRange(coords.r, this.landscape.height) ||
              !_.inRange(coords.c, this.landscape.width)  ||
-             this.landscape.grid[coords.r][coords.c]
+             this.landscape.grid.get(coords.r, coords.c)
     },
     dieSlowly: function () {
       this.size -= 0.01;

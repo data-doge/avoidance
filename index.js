@@ -4,7 +4,6 @@ var Landscape = require('./js/landscape')
 var landscape = Landscape()
 
 $(document).on('keypress', function (e) {
-  e.preventDefault();
   landscape.addBot(null);
 });
 
