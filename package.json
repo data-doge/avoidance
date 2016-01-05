@@ -28,6 +28,7 @@
     "fixed-2d-array": "^1.2.0",
     "jquery": "^2.1.4",
     "lodash": "^3.10.1",
+    "random-int": "^1.0.0",
     "rotate-array": "^1.1.0",
     "stampit": "^2.1.1"
   },
