@@ -4,9 +4,10 @@ function Bot (params) {
   this.directions = ['up', 'right', 'down', 'left'];
   this.initializeDirection(params.direction || _.sample(this.directions));
   this.scale = params.scale;
+  this.size = this.scale;
   this.$element = $('<div class="bot"></div>').css({
-    width: this.scale,
-    height: this.scale,
+    width: this.size,
+    height: this.size,
     top: this.r,
     left: this.c,
     background: _.sample(["#F6F792", "#77C4D3", "#DAEDE2", "#EA2E49", "#FFFFFF"])
@@ -46,6 +47,19 @@ Bot.prototype.isAboutToCollide = function () {
   return !_.inRange(coords.r, this.landscape.height) ||
          !_.inRange(coords.c, this.landscape.width)  ||
          this.landscape.grid[coords.r][coords.c]
+};
+
+Bot.prototype.dieSlowly = function () {
+  this.size -= 0.01;
+  this.$element.css({
+    width: this.size,
+    height: this.size,
+    "border-width": this.scale - this.size
+  });
+};
+
+Bot.prototype.isAlive = function () {
+  return this.size > 3.0;
 };
 
 Bot.prototype.moveForward = function () {

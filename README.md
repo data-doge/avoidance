@@ -9,3 +9,12 @@ if there is nowhere for the bot to go, it goes nowhere
 ---
 
 to run prototype ruby script, run `ruby prototype/index.rb`
+
+---
+
+to-do:
+
+- switch over to canvas
+- when dot gets small enough it is removed from page
+- allow user to destroy all bots
+- allow user to select algorithm

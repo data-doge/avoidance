@@ -54,6 +54,10 @@ Landscape.prototype.updatePositionFor = function (bot) {
   for (var i = 0; i < 4; i++) {
     if (bot.isAboutToCollide()) {
       bot.changeDirection();
+      if (bot.isAlive()) {
+        console.log('callled')
+        bot.dieSlowly();
+      }
       this.collisionsAvoided++;
       this.$collisionAvoidedCounter.text(this.collisionsAvoided);
     } else {
