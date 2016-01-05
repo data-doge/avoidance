@@ -38,20 +38,11 @@ var Bot = stampit({
     },
     dieSlowly: function () {
       this.size -= 0.01
-      this.$element.css({
-        width: this.size,
-        height: this.size,
-        "border-width": this.scale - this.size
-      })
     },
     moveForward: function () {
       var coords = this.nextCoords()
       this.c = coords.c
       this.r = coords.r
-      this.$element.css({
-        top: this.r * this.size,
-        left: this.c * this.size
-      })
     },
 
     // private

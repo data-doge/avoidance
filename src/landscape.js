@@ -57,6 +57,7 @@ var Landscape = stampit({
           break
         }
       }
+      bot.render()
     }
   }
 })
