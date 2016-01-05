@@ -39,7 +39,7 @@ var Bot = stampit({
       return this.size > 3.0
     },
     dieSlowly: function () {
-      this.size -= 0.01
+      // this.size -= 0.01
     },
     moveForward: function () {
       var coords = this.nextCoords()
