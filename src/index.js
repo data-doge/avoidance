@@ -7,8 +7,8 @@ $(document).on('keypress', function () {
   landscape.addBot()
 });
 
-function update () {
-  landscape.updateFrame()
-  window.requestAnimationFrame(update)
-}
-window.requestAnimationFrame(update)
+// function update () {
+//   landscape.updateFrame()
+//   window.requestAnimationFrame(update)
+// }
+// window.requestAnimationFrame(update)

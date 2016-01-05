@@ -18,7 +18,7 @@ var Bot = stampit({
   },
   methods: {
     render: function () {
-      this.landscape.$element.append(this.$element)
+      // this.landscape.$element.append(this.$element)
     },
     isAboutToCollide: function () {
       var coords = this.nextCoords(), landscape = this.landscape
