@@ -1,0 +1,45 @@
+{
+  "name": "avoidance",
+  "version": "1.0.0",
+  "description": "everything running away from everything",
+  "main": "index.js",
+  "scripts": {
+    "start": "budo . -d --serve bundle.js --live",
+    "build": "browserify . -o bundle.js -g uglifyify",
+    "test": "browserify test.js | smokestack | tap-spec",
+    "dist": "mkdir -p dist && bash -c 'cp *.{js,html,css} dist'",
+    "push": "gh-pages -d dist",
+    "deploy": "npm run build && npm run dist && npm run push"
+  },
+  "browserify": {
+    "transform": []
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/data-doge/avoidance"
+  },
+  "author": "data-doge",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/data-doge/avoidance/issues"
+  },
+  "homepage": "https://github.com/data-doge/avoidance",
+  "dependencies": {
+    "fixed-2d-array": "^1.2.0",
+    "jquery": "^2.1.4",
+    "lodash": "^3.10.1",
+    "random-int": "^1.0.0",
+    "rotate-array": "^1.1.0",
+    "stampit": "^2.1.1"
+  },
+  "devDependencies": {
+    "browserify": "^10.0.0",
+    "budo": "^4.0.0",
+    "gh-pages": "^0.3.0",
+    "smokestack": "^3.3.0",
+    "tap-spec": "^4.0.2",
+    "tape": "^4.0.0",
+    "uglifyify": "^3.0.1",
+    "watchify": "^3.1.0"
+  }
+}
