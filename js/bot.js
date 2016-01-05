@@ -1,6 +1,7 @@
 var stampit = require('stampit')
 var _ = require('lodash')
 var $ = require('jquery')
+var rotate = require('rotate-array')
 
 var Bot = stampit({
   init: function () {
@@ -23,7 +24,7 @@ var Bot = stampit({
       return this.directions[0]
     },
     changeDirection: function () {
-      this.directions.rotate()
+      this.directions = rotate(this.directions, 1)
     },
     nextCoords: function () {
       var dc = 0, dr = 0
