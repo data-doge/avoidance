@@ -10,7 +10,6 @@ html, body {
   margin: 0 auto;
   top: 50%;
   transform: translateY(-50%);
-  border: 1px solid white;
 }
 
 .container {
