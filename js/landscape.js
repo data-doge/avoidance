@@ -29,38 +29,36 @@ var Landscape = stampit({
       })
     },
     initializeBots: function () {
-      var self = this;
-      var numOfBots = parseInt(self.potentialCoords.length * this.densityPercent / 100);
-      var activeCoords = _.take(_.shuffle(self.potentialCoords), numOfBots);
+      var self = this
+      var numOfBots = parseInt(self.potentialCoords.length * this.densityPercent / 100)
+      var activeCoords = _.take(_.shuffle(self.potentialCoords), numOfBots)
       this.bots = []
       _.each(activeCoords, function (coord) {
-        self.addBot({c: coord.c, r: coord.r});
-      });
+        self.addBot({c: coord.c, r: coord.r})
+      })
     },
     addBot: function (params) {
-      var self = this;
-      params = params || _.sample(this.potentialCoords);
-      var bot = new Bot(_.merge(params, {scale: this.scale}));
-      bot.landscape = this;
+      var self = this
+      params = params || _.sample(this.potentialCoords)
+      var bot = new Bot(_.merge(params, {scale: this.scale}))
+      bot.landscape = this
       this.bots.push(bot)
       this.grid.set(bot.r, bot.c, bot)
-      bot.render();
-      this.$botCounter.text(this.bots.length);
+      bot.render()
+      this.$botCounter.text(this.bots.length)
     },
     updatePositionFor: function (bot) {
       for (var i = 0; i < 4; i++) {
         if (bot.isAboutToCollide()) {
-          bot.changeDirection();
-          if (bot.isAlive()) {
-            bot.dieSlowly();
-          }
-          this.collisionsAvoided++;
-          this.$collisionAvoidedCounter.text(this.collisionsAvoided);
+          bot.changeDirection()
+          if (bot.isAlive()) { bot.dieSlowly() }
+          this.collisionsAvoided++
+          this.$collisionAvoidedCounter.text(this.collisionsAvoided)
         } else {
           this.grid.set(bot.r, bot.c, null)
-          bot.moveForward();
+          bot.moveForward()
           this.grid.set(bot.r, bot.c, bot)
-          break;
+          break
         }
       }
     },
@@ -68,13 +66,10 @@ var Landscape = stampit({
       this.$element.css({
         width: this.width * this.scale,
         height: this.height * this.scale,
-      });
+      })
     },
     updateFrame: function () {
-      var self = this;
-      _.each(this.bots, function (bot) {
-        self.updatePositionFor(bot);
-      });
+      _.each(this.bots, this.updatePositionFor.bind(this))
     }
   }
 })
