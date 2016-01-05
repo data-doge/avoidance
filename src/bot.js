@@ -20,27 +20,17 @@ var Bot = stampit({
     render: function () {
       this.landscape.$element.append(this.$element)
     },
-    currentDirection: function () {
-      return this.directions[0]
+    isAboutToCollide: function () {
+      var coords = this.nextCoords(), landscape = this.landscape
+      return !_.inRange(coords.r, landscape.height) ||
+      !_.inRange(coords.c, landscape.width)  ||
+      landscape.grid.get(coords.r, coords.c)
     },
     changeDirection: function () {
       this.directions = rotate(this.directions, 1)
     },
-    nextCoords: function () {
-      var dc = 0, dr = 0
-      switch (this.currentDirection()) {
-        case 'up':    dr = -1; break
-        case 'right': dc =  1; break
-        case 'down':  dr =  1; break
-        case 'left':  dc = -1; break
-      }
-      return {c: this.c + dc, r: this.r + dr}
-    },
-    isAboutToCollide: function () {
-      var coords = this.nextCoords(), landscape = this.landscape
-      return !_.inRange(coords.r, landscape.height) ||
-             !_.inRange(coords.c, landscape.width)  ||
-             landscape.grid.get(coords.r, coords.c)
+    isAlive: function () {
+      return this.size > 3.0
     },
     dieSlowly: function () {
       this.size -= 0.01
@@ -49,9 +39,6 @@ var Bot = stampit({
         height: this.size,
         "border-width": this.scale - this.size
       })
-    },
-    isAlive: function () {
-      return this.size > 3.0
     },
     moveForward: function () {
       var coords = this.nextCoords()
@@ -62,6 +49,21 @@ var Bot = stampit({
         left: this.c * this.scale
       })
     },
+
+    // private
+    currentDirection: function () {
+      return this.directions[0]
+    },
+    nextCoords: function () {
+      var dc = 0, dr = 0
+      switch (this.currentDirection()) {
+        case 'up':    dr = -1; break
+        case 'right': dc =  1; break
+        case 'down':  dr =  1; break
+        case 'left':  dc = -1; break
+      }
+      return {c: this.c + dc, r: this.r + dr}
+    }
   }
 })
 
