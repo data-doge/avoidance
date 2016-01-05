@@ -24,8 +24,6 @@ var Bot = stampit({
     },
     changeDirection: function () {
       this.directions.rotate()
-      // var self = this;
-      // this.directions = _.shuffle(self.directions);
     },
     nextCoords: function () {
       var dc = 0, dr = 0
@@ -38,10 +36,10 @@ var Bot = stampit({
       return {c: this.c + dc, r: this.r + dr}
     },
     isAboutToCollide: function () {
-      var coords = this.nextCoords()
-      return !_.inRange(coords.r, this.landscape.height) ||
-             !_.inRange(coords.c, this.landscape.width)  ||
-             this.landscape.grid.get(coords.r, coords.c)
+      var coords = this.nextCoords(), landscape = this.landscape
+      return !_.inRange(coords.r, landscape.height) ||
+             !_.inRange(coords.c, landscape.width)  ||
+             landscape.grid.get(coords.r, coords.c)
     },
     dieSlowly: function () {
       this.size -= 0.01
