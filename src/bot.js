@@ -11,8 +11,8 @@ var Bot = stampit({
     this.$element = $('<div class="bot"></div>').css({
       width: this.size,
       height: this.size,
-      top: this.r,
-      left: this.c,
+      top: this.r * this.scale,
+      left: this.c * this.scale,
       background: _.sample(["#F6F792", "#77C4D3", "#DAEDE2", "#EA2E49", "#FFFFFF"])
     })
   },
