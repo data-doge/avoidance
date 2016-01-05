@@ -50,7 +50,7 @@ Bot.prototype.isAboutToCollide = function () {
 };
 
 Bot.prototype.dieSlowly = function () {
-  this.size -= 0.1;
+  this.size -= 0.01;
   this.$element.css({
     width: this.size,
     height: this.size,

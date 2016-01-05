@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-  var landscape = new Landscape({width: 50, height: 50, densityPercent: 30, scale: 10});
+  var landscape = new Landscape({width: 50, height: 50, densityPercent: 0, scale: 10});
 
   $(document).on('keypress', function (e) {
     e.preventDefault();
