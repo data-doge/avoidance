@@ -2,11 +2,11 @@ var stampit = require('stampit')
 var _ = require('lodash')
 var $ = require('jquery')
 var rotate = require('rotate-array')
+var randomInt = require('random-int')
 
 var Bot = stampit({
   init: function () {
-    this.directions = ['up', 'right', 'down', 'left']
-    this.initializeDirection(_.sample(this.directions))
+    this.directions = rotate(['up', 'right', 'down', 'left'], randomInt(3))
     this.size = this.scale
     this.$element = $('<div class="bot"></div>').css({
       width: this.size,
@@ -17,8 +17,8 @@ var Bot = stampit({
     })
   },
   methods: {
-    initializeDirection: function (direction) {
-      while (this.currentDirection() !== direction) { this.changeDirection() }
+    render: function () {
+      this.landscape.$element.append(this.$element)
     },
     currentDirection: function () {
       return this.directions[0]
@@ -62,9 +62,6 @@ var Bot = stampit({
         left: this.c * this.scale
       })
     },
-    render: function () {
-      this.landscape.$element.append(this.$element)
-    }
   }
 })
 
