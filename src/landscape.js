@@ -19,8 +19,7 @@ var Landscape = stampit({
   },
   methods: {
     addBot: function () {
-      var bot = Bot(_.merge(this.getRandCoords(), {scale: this.scale}))
-      bot.landscape = this
+      var bot = Bot(_.merge(this.getRandCoords(), {landscape: this}))
       this.bots.push(bot)
       this.grid.set(bot.r, bot.c, bot)
       bot.render()
