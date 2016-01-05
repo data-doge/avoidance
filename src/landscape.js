@@ -26,6 +26,7 @@ var Landscape = stampit({
       this.$botCounter.text(this.bots.length)
     },
     updateFrame: function () {
+      // this.ctx.clearRect(0,0,this.width * this.scale, this.height * this.scale)
       _.each(this.bots, this.updatePositionFor.bind(this))
     },
 
