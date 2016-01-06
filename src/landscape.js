@@ -27,7 +27,7 @@ var Landscape = stampit({
     },
     updateFrame: function () {
       // this.ctx.clearRect(0,0,this.width * this.scale, this.height * this.scale)
-      _.each(this.bots, this.updatePositionFor.bind(this))
+      _.each(this.bots, this.updateBot.bind(this))
     },
 
     // private
@@ -44,11 +44,15 @@ var Landscape = stampit({
     getRandCoords: function () {
       return { r: randomInt(this.height - 1), c: randomInt(this.width - 1) }
     },
-    updatePositionFor: function (bot) {
+    updateBot: function (bot) {
       for (var i = 0; i < 4; i++) {
         if (bot.isAboutToCollide()) {
           bot.changeDirection()
-          if (bot.isAlive()) { bot.dieSlowly() }
+          if (bot.isAlive()) {
+            bot.dieSlowly()
+          } else {
+
+          }
           this.collisionsAvoided++
           this.$collisionAvoidedCounter.text(this.collisionsAvoided)
         } else {
