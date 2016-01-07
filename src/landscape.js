@@ -4,11 +4,12 @@ var _ = require('lodash')
 var $ = require('jquery')
 var Bot = require('./bot')
 var randomInt = require('random-int')
+var rotate = require('rotate-array')
 
 var Landscape = stampit({
   init: function () {
     this.isOn = true
-    this.trailsExist = true
+    this.trailModes = ['full', 'none', 'fade']
     this.thingsCanDie = true
     this.$canvas = $('<canvas></canvas>')
     this.ctx = this.$canvas[0].getContext('2d')
@@ -22,15 +23,19 @@ var Landscape = stampit({
   },
   methods: {
     addBot: function () {
-      var bot = Bot(_.merge(this.getRandCoords(), {landscape: this}))
+      var bot = Bot(_.merge(this.getCenterCoords(), {landscape: this}))
       this.bots.push(bot)
       this.grid.set(bot.r, bot.c, bot)
       bot.render()
       this.updateBotCount()
     },
     update: function () {
-      if (!this.trailsExist) {
-        this.ctx.clearRect(0,0,this.width * this.scale, this.height * this.scale)
+      switch (this.trailMode()) {
+        case 'none': this.clear(); break
+        case 'fade':
+          this.ctx.fillStyle = 'rgba(0,0,0,0.1)'
+          this.ctx.fillRect(0, 0, this.width * this.scale, this.height * this.scale)
+          break
       }
       this.removeTheDead()
       _.each(this.bots, this.updateBot.bind(this))
@@ -45,8 +50,8 @@ var Landscape = stampit({
       this.isOn = !this.isOn
       if (this.isOn) { this.animate() }
     },
-    toggleTrails: function () {
-      this.trailsExist = !this.trailsExist
+    switchTrailMode: function () {
+      this.trailModes = rotate(this.trailModes, 1)
     },
     toggleExistenceOfDeath: function () {
       this.thingsCanDie = !this.thingsCanDie
@@ -92,6 +97,12 @@ var Landscape = stampit({
     },
     updateBotCount: function () {
       this.$botCounter.text(this.bots.length)
+    },
+    trailMode: function () {
+      return this.trailModes[0]
+    },
+    clear: function () {
+      this.ctx.clearRect(0,0,this.width * this.scale, this.height * this.scale)
     }
   }
 })
