@@ -39,7 +39,7 @@ var Bot = stampit({
       return this.radius > 1
     },
     dieSlowly: function () {
-      this.radius -= 0.02
+      this.radius -= 0.1
     },
     moveForward: function () {
       var coords = this.nextCoords()
