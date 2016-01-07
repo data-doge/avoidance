@@ -13,6 +13,7 @@ var Landscape = stampit({
     this.theta = 0
     this.radius = 0
     this.currentStep = 0
+    this.radiusIsGrowing = true
     this.isOn = true
     this.trailModes = ['full', 'none', 'fade']
     this.thingsCanDie = true
@@ -61,6 +62,17 @@ var Landscape = stampit({
         this.update()
         requestAnimationFrame(this.animate.bind(this))
       }
+    },
+    growSpiral: function () {
+      this.updateSpiralParams()
+      var newCoords = this.getNextSpiralCoords()
+      var r = newCoords.r, c = newCoords.c
+      console.log('r: ', r, ' c: ', c)
+      this.ctx.fillStyle = 'rgb(255,255,255)'
+      this.ctx.beginPath()
+      this.ctx.arc(r * this.scale, c * this.scale, 5, 0, 2 * Math.PI)
+      this.ctx.fill()
+      // we check the angle, and if its so and so, spawn a bunch of bots
     },
     toggleAnimation: function () {
       this.isOn = !this.isOn
@@ -123,17 +135,19 @@ var Landscape = stampit({
     clear: function () {
       this.ctx.clearRect(0,0,this.width * this.scale, this.height * this.scale)
     },
-
     updateSpiralParams: function () {
-      this.theta += 0.0174533
+      this.theta += 0.0174533 * 5
       var currentStep = Math.floor(this.theta / 2.39996)
       if (currentStep !== this.currentStep) {
         this.currentStep = currentStep
-        this.radius++
-        console.log('neow')
+
+        this.radiusIsGrowing ? this.radius += 2 : this.radius -= 2
+        if (this.radius > this.height / 2 - 3) { this.radiusIsGrowing = false }
+        if (this.radius < 3) { this.radiusIsGrowing = true }
+
+        _.times(20, this.addBot.bind(this))
       }
     },
-
     getNextSpiralCoords: function () {
       var centerR = Math.floor(this.height / 2), centerC = Math.floor(this.width / 2)
       this.updateSpiralParams()

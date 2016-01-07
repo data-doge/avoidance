@@ -36,7 +36,7 @@ var Bot = stampit({
       this.directions = _.shuffle(this.directions)
     },
     isAlive: function () {
-      return this.radius > 1
+      return this.radius > 0.5
     },
     dieSlowly: function () {
       this.radius -= 0.1
