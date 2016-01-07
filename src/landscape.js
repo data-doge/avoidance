@@ -5,9 +5,14 @@ var $ = require('jquery')
 var Bot = require('./bot')
 var randomInt = require('random-int')
 var rotate = require('rotate-array')
+var howClose = require('closeness');
+var close = howClose(2.39996, 0.0174533)
 
 var Landscape = stampit({
   init: function () {
+    this.theta = 0
+    this.radius = 0
+    this.currentStep = 0
     this.isOn = true
     this.trailModes = ['full', 'none', 'fade']
     this.thingsCanDie = true
@@ -21,9 +26,20 @@ var Landscape = stampit({
     this.bots = []
     this.initializeBots()
   },
+
+  // y = r sin theta
+  // x = r cos theta
+
+  // r increment every so and so
+  // constantly theta
+
+  // dr = 0.2
+
+  // dtheta = 1
+
   methods: {
     addBot: function () {
-      var bot = Bot(_.merge(this.getCenterCoords(), {landscape: this}))
+      var bot = Bot(_.merge(this.getNextSpiralCoords(), {landscape: this}))
       this.bots.push(bot)
       this.grid.set(bot.r, bot.c, bot)
       bot.render()
@@ -71,6 +87,9 @@ var Landscape = stampit({
     getRandCoords: function () {
       return { r: randomInt(this.height - 1), c: randomInt(this.width - 1) }
     },
+    getCenterCoords: function () {
+      return {r: Math.floor(this.height / 2), c: Math.floor(this.width / 2)}
+    },
     updateBot: function (bot) {
       for (var i = 0; i < 4; i++) {
         if (bot.isAboutToCollide()) {
@@ -103,6 +122,23 @@ var Landscape = stampit({
     },
     clear: function () {
       this.ctx.clearRect(0,0,this.width * this.scale, this.height * this.scale)
+    },
+
+    updateSpiralParams: function () {
+      this.theta += 0.0174533
+      var currentStep = Math.floor(this.theta / 2.39996)
+      if (currentStep !== this.currentStep) {
+        this.currentStep = currentStep
+        this.radius++
+        console.log('neow')
+      }
+    },
+
+    getNextSpiralCoords: function () {
+      var centerR = Math.floor(this.height / 2), centerC = Math.floor(this.width / 2)
+      this.updateSpiralParams()
+      var r = Math.floor(this.radius * Math.sin(this.theta)), c = Math.floor(this.radius * Math.cos(this.theta))
+      return {r: centerR + r , c: centerC + c}
     }
   }
 })

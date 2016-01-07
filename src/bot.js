@@ -31,9 +31,9 @@ var Bot = stampit({
              landscape.grid.get(coords.r, coords.c)
     },
     changeDirection: function () {
-      this.directions = rotate(this.directions, 1)
+      // this.directions = rotate(this.directions, 1)
       // this.directions = rotate(this.directions, 2)
-      // this.directions = _.shuffle(this.directions)
+      this.directions = _.shuffle(this.directions)
     },
     isAlive: function () {
       return this.radius > 1

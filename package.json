@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/data-doge/avoidance",
   "dependencies": {
+    "closeness": "^1.0.0",
     "fixed-2d-array": "^1.2.0",
     "jquery": "^2.1.4",
     "lodash": "^3.10.1",
