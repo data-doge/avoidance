@@ -14,7 +14,6 @@ canvas {
 }
 
 .container {
-  display: none;
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
