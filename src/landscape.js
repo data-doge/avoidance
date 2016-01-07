@@ -8,6 +8,7 @@ var randomInt = require('random-int')
 var Landscape = stampit({
   init: function () {
     this.isOn = true
+    this.trailsExist = true
     this.$canvas = $('<canvas></canvas>')
     this.ctx = this.$canvas[0].getContext('2d')
     this.prepareCanvas()
@@ -27,7 +28,9 @@ var Landscape = stampit({
       this.updateBotCount()
     },
     update: function () {
-      // this.ctx.clearRect(0,0,this.width * this.scale, this.height * this.scale)
+      if (!this.trailsExist) {
+        this.ctx.clearRect(0,0,this.width * this.scale, this.height * this.scale)
+      }
       this.removeTheDead()
       _.each(this.bots, this.updateBot.bind(this))
     },
@@ -40,6 +43,9 @@ var Landscape = stampit({
     toggleAnimation: function () {
       this.isOn = !this.isOn
       if (this.isOn) { this.animate() }
+    },
+    toggleTrails: function () {
+      this.trailsExist = !this.trailsExist
     },
 
     // private

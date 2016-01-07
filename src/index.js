@@ -9,6 +9,6 @@ $(document).on('keypress', function (e) {
   switch (e.keyCode) {
     case 97: landscape.addBot(); break // 'a'
     case 112: landscape.toggleAnimation(); break // 'p'
-
+    case 116: landscape.toggleTrails(); break // 't'
   }
 })
