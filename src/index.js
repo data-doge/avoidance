@@ -10,5 +10,6 @@ $(document).on('keypress', function (e) {
     case 97: landscape.addBot(); break // 'a'
     case 112: landscape.toggleAnimation(); break // 'p'
     case 116: landscape.toggleTrails(); break // 't'
+    case 100: landscape.toggleExistenceOfDeath(); break // 'd'
   }
 })

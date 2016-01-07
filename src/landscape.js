@@ -9,6 +9,7 @@ var Landscape = stampit({
   init: function () {
     this.isOn = true
     this.trailsExist = true
+    this.thingsCanDie = true
     this.$canvas = $('<canvas></canvas>')
     this.ctx = this.$canvas[0].getContext('2d')
     this.prepareCanvas()
@@ -47,6 +48,9 @@ var Landscape = stampit({
     toggleTrails: function () {
       this.trailsExist = !this.trailsExist
     },
+    toggleExistenceOfDeath: function () {
+      this.thingsCanDie = !this.thingsCanDie
+    },
 
     // private
     prepareCanvas: function () {
@@ -66,7 +70,7 @@ var Landscape = stampit({
       for (var i = 0; i < 4; i++) {
         if (bot.isAboutToCollide()) {
           bot.changeDirection()
-          bot.dieSlowly()
+          if (this.thingsCanDie) { bot.dieSlowly() }
           this.collisionsAvoided++
           this.$collisionAvoidedCounter.text(this.collisionsAvoided)
         } else {
