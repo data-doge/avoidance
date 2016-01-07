@@ -17,8 +17,8 @@ var Bot = stampit({
   methods: {
     render: function () {
       var ctx = this.landscape.ctx
-      var x = this.r * this.scale + this.radius
-      var y = this.c * this.scale + this.radius
+      var x = this.r * this.scale + this.scale / 2
+      var y = this.c * this.scale + this.scale / 2
       ctx.fillStyle = this.color
       ctx.beginPath()
       ctx.arc(x, y, this.radius, 0, 2 * Math.PI)
@@ -36,10 +36,10 @@ var Bot = stampit({
       // this.directions = _.shuffle(this.directions)
     },
     isAlive: function () {
-      return this.size > 3.0
+      return this.radius > 1
     },
     dieSlowly: function () {
-      // this.size -= 0.01
+      this.radius -= 0.1
     },
     moveForward: function () {
       var coords = this.nextCoords()

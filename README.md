@@ -9,8 +9,8 @@ if there is nowhere for the bot to go, it goes nowhere
 every time a bot avoids another bot, it dies a little inside
 
 #### todo:
-  - user can toggle trails on or off
   - bots die slowly
+  - user can toggle trails on or off
   - user can choose the lifespan of the bot (how many interactions can it have before dying)
   - user can pause animation
   - user can reset animation

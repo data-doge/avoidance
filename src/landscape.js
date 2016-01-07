@@ -23,12 +23,14 @@ var Landscape = stampit({
       this.bots.push(bot)
       this.grid.set(bot.r, bot.c, bot)
       bot.render()
-      this.$botCounter.text(this.bots.length)
+      this.updateBotCount()
     },
     updateFrame: function () {
       // this.ctx.clearRect(0,0,this.width * this.scale, this.height * this.scale)
-      _.each(this.bots, this.updatePositionFor.bind(this))
+      this.removeTheDead()
+      _.each(this.bots, this.updateBot.bind(this))
     },
+
 
     // private
     prepareCanvas: function () {
@@ -44,11 +46,11 @@ var Landscape = stampit({
     getRandCoords: function () {
       return { r: randomInt(this.height - 1), c: randomInt(this.width - 1) }
     },
-    updatePositionFor: function (bot) {
+    updateBot: function (bot) {
       for (var i = 0; i < 4; i++) {
         if (bot.isAboutToCollide()) {
           bot.changeDirection()
-          if (bot.isAlive()) { bot.dieSlowly() }
+          bot.dieSlowly()
           this.collisionsAvoided++
           this.$collisionAvoidedCounter.text(this.collisionsAvoided)
         } else {
@@ -59,6 +61,17 @@ var Landscape = stampit({
         }
       }
       bot.render()
+    },
+    removeTheDead: function () {
+      var deadBots = _.remove(this.bots, function (bot) { return !bot.isAlive() })
+      var self = this
+      _.each(deadBots, function (deadBot) {
+        self.grid.set(deadBot.r, deadBot.c, null)
+      })
+      this.updateBotCount()
+    },
+    updateBotCount: function () {
+      this.$botCounter.text(this.bots.length)
     }
   }
 })
