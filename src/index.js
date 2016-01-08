@@ -2,7 +2,7 @@ var $ = require('jquery')
 var Landscape = require('./landscape')
 var _ = require('lodash')
 
-var landscape = Landscape({width: 300, height: 300, densityPercent: 10, scale: 2})
+var landscape = Landscape({width: 200, height: 200, densityPercent: 5, scale: 3})
 landscape.animate()
 
 $(document).on('keypress', function (e) {

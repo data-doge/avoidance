@@ -33,6 +33,7 @@ var Bot = stampit({
     changeDirection: function () {
       // this.directions = rotate(this.directions, 1)
       // this.directions = rotate(this.directions, 2)
+      // this.directions = rotate(this.directions, 3)
       this.directions = _.shuffle(this.directions)
     },
     isAlive: function () {
