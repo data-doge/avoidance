@@ -27,17 +27,6 @@ var Landscape = stampit({
     this.bots = []
     this.initializeBots()
   },
-
-  // y = r sin theta
-  // x = r cos theta
-
-  // r increment every so and so
-  // constantly theta
-
-  // dr = 0.2
-
-  // dtheta = 1
-
   methods: {
     addBot: function () {
       var bot = Bot(_.merge(this.getNextSpiralCoords(), {landscape: this}))
@@ -66,13 +55,6 @@ var Landscape = stampit({
     growSpiral: function () {
       this.updateSpiralParams()
       var newCoords = this.getNextSpiralCoords()
-      var r = newCoords.r, c = newCoords.c
-      console.log('r: ', r, ' c: ', c)
-      this.ctx.fillStyle = 'rgb(255,255,255)'
-      this.ctx.beginPath()
-      this.ctx.arc(r * this.scale, c * this.scale, 5, 0, 2 * Math.PI)
-      this.ctx.fill()
-      // we check the angle, and if its so and so, spawn a bunch of bots
     },
     toggleAnimation: function () {
       this.isOn = !this.isOn
