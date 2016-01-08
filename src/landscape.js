@@ -23,7 +23,7 @@ var Landscape = stampit({
   },
   methods: {
     addBot: function () {
-      var bot = Bot(_.merge(this.getCenterCoords(), {landscape: this}))
+      var bot = Bot(_.merge(this.getRandCoords(), {landscape: this}))
       this.bots.push(bot)
       this.grid.set(bot.r, bot.c, bot)
       bot.render()
@@ -55,6 +55,12 @@ var Landscape = stampit({
     },
     toggleExistenceOfDeath: function () {
       this.thingsCanDie = !this.thingsCanDie
+    },
+    reset: function () {
+      this.grid = new Fixed2DArray(this.height, this.width, null)
+      this.clear()
+      this.bots = []
+      this.updateBotCount()
     },
 
     // private
