@@ -62,6 +62,9 @@ var Landscape = stampit({
       this.bots = []
       this.updateBotCount()
     },
+    switchBotAvoidanceAlgorithm: function () {
+      this.bots[0].switchAvoidanceAlgorithm()
+    },
 
     // private
     prepareCanvas: function () {

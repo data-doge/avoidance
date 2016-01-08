@@ -12,5 +12,6 @@ $(document).on('keypress', function (e) {
     case 116: landscape.switchTrailMode(); break // 't'
     case 100: landscape.toggleExistenceOfDeath(); break // 'd'
     case 99: landscape.reset(); break; // 'c'
+    case 114: landscape.switchBotAvoidanceAlgorithm(); break; // 'r'
   }
 })
