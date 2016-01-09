@@ -34,7 +34,7 @@ var Landscape = stampit({
         case 'none': this.clear(); break
         case 'fade':
           this.ctx.fillStyle = 'rgba(0,0,0,0.1)'
-          this.ctx.fillRect(0, 0, this.width * this.scale, this.height * this.scale)
+          this.ctx.fillRect(0, 0, this.width, this.height)
           break
       }
       this.removeTheDead()
@@ -71,6 +71,7 @@ var Landscape = stampit({
       this.$canvas.attr('width', this.width * this.scale)
                   .attr('height', this.height * this.scale)
       $('body').prepend(this.$canvas)
+      this.ctx.scale(this.scale,this.scale)
     },
     initializeBots: function () {
       var numOfCells = this.width * this.height
@@ -111,7 +112,7 @@ var Landscape = stampit({
       return this.trailModes[0]
     },
     clear: function () {
-      this.ctx.clearRect(0,0,this.width * this.scale, this.height * this.scale)
+      this.ctx.clearRect(0, 0, this.width, this.height)
     }
   }
 })
