@@ -9,8 +9,9 @@ if there is nowhere for the bot to go, it goes nowhere
 every time a bot avoids another bot, it dies a little inside
 
 #### todo:
-  - make opacity a fxn of amplitude at bassy frequencies
-  - user can choose the lifespan of the bot (how many interactions can it have before dying)
-  - user can reset animation
-  - user can specify number of bots to start with
-  - keys/indicators displayed somewhere
+- specify number of bots to start with
+- keys/indicators displayed somewhere
+- vary spawn mode
+- choose resilience
+- choose number of bots
+- explanation of the program and interface

@@ -14,15 +14,14 @@ var Bot = stampit({
   },
   init: function () {
     this.directions = rotate(['up', 'right', 'down', 'left'], randomInt(3))
-    this.scale = this.landscape.scale
-    this.radius = this.scale / 2
+    this.radius = 0.5
     this.color = _.sample(this.colors)
   },
   methods: {
     render: function () {
       var ctx = this.landscape.ctx
-      var x = this.r * this.scale + this.scale / 2
-      var y = this.c * this.scale + this.scale / 2
+      var x = this.r + 0.5
+      var y = this.c + 0.5
       ctx.fillStyle = this.color
       ctx.beginPath()
       ctx.arc(x, y, this.radius, 0, 2 * Math.PI)
@@ -30,8 +29,8 @@ var Bot = stampit({
     },
     isAboutToCollide: function () {
       var coords = this.nextCoords(), landscape = this.landscape
-      return !_.inRange(coords.r, landscape.height) ||
-             !_.inRange(coords.c, landscape.width)  ||
+      return !_.inRange(coords.r, landscape.size) ||
+             !_.inRange(coords.c, landscape.size)  ||
              landscape.grid.get(coords.r, coords.c)
     },
     changeDirection: function () {
@@ -43,10 +42,10 @@ var Bot = stampit({
       }
     },
     isAlive: function () {
-      return this.radius > 1
+      return this.radius > 0.1
     },
     dieSlowly: function () {
-      this.radius -= 0.1
+      this.radius -= 0.01
     },
     moveForward: function () {
       var coords = this.nextCoords()
