@@ -7,18 +7,22 @@ var randomInt = require('random-int')
 var rotate = require('rotate-array')
 
 var Landscape = stampit({
+  refs: {
+    trailModes: ['fade', 'full', 'none'],
+    ctx: $('#landscape')[0].getContext('2d'),
+    isOn: true,
+    thingsCanDie: true,
+    collisionsAvoided: 0,
+    size: 200,
+    densityPercent: 30,
+    bots: []
+  },
   init: function () {
-    this.isOn = true
-    this.trailModes = ['full', 'none', 'fade']
-    this.thingsCanDie = true
-    this.$canvas = $('<canvas></canvas>')
-    this.ctx = this.$canvas[0].getContext('2d')
-    this.prepareCanvas()
     this.$botCounter = $('#bot-count')
     this.$collisionAvoidedCounter = $('#collisions-avoided-count')
-    this.collisionsAvoided = 0
+    this.scale = 500 / this.size
+    this.ctx.scale(this.scale, this.scale)
     this.grid = new Fixed2DArray(this.size, this.size, null)
-    this.bots = []
     this.initializeBots()
   },
   methods: {
@@ -65,14 +69,10 @@ var Landscape = stampit({
     switchBotAvoidanceAlgorithm: function () {
       Bot.fixed.refs.switchAvoidanceAlgorithm()
     },
+    size: function () {
+    },
 
     // private
-    prepareCanvas: function () {
-      this.$canvas.attr('width', this.size * this.scale)
-                  .attr('height', this.size * this.scale)
-      $('body').prepend(this.$canvas)
-      this.ctx.scale(this.scale,this.scale)
-    },
     initializeBots: function () {
       var numOfCells = this.size * this.size
       var numOfBots = parseInt(numOfCells * this.densityPercent / 100)
