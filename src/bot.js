@@ -29,8 +29,8 @@ var Bot = stampit({
     },
     isAboutToCollide: function () {
       var coords = this.nextCoords(), landscape = this.landscape
-      return !_.inRange(coords.r, landscape.height) ||
-             !_.inRange(coords.c, landscape.width)  ||
+      return !_.inRange(coords.r, landscape.size) ||
+             !_.inRange(coords.c, landscape.size)  ||
              landscape.grid.get(coords.r, coords.c)
     },
     changeDirection: function () {

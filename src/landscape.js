@@ -17,7 +17,7 @@ var Landscape = stampit({
     this.$botCounter = $('#bot-count')
     this.$collisionAvoidedCounter = $('#collisions-avoided-count')
     this.collisionsAvoided = 0
-    this.grid = new Fixed2DArray(this.height, this.width, null)
+    this.grid = new Fixed2DArray(this.size, this.size, null)
     this.bots = []
     this.initializeBots()
   },
@@ -34,7 +34,7 @@ var Landscape = stampit({
         case 'none': this.clear(); break
         case 'fade':
           this.ctx.fillStyle = 'rgba(0,0,0,0.1)'
-          this.ctx.fillRect(0, 0, this.width, this.height)
+          this.ctx.fillRect(0, 0, this.size, this.size)
           break
       }
       this.removeTheDead()
@@ -57,7 +57,7 @@ var Landscape = stampit({
       this.thingsCanDie = !this.thingsCanDie
     },
     reset: function () {
-      this.grid = new Fixed2DArray(this.height, this.width, null)
+      this.grid = new Fixed2DArray(this.size, this.size, null)
       this.clear()
       this.bots = []
       this.updateBotCount()
@@ -68,18 +68,18 @@ var Landscape = stampit({
 
     // private
     prepareCanvas: function () {
-      this.$canvas.attr('width', this.width * this.scale)
-                  .attr('height', this.height * this.scale)
+      this.$canvas.attr('width', this.size * this.scale)
+                  .attr('height', this.size * this.scale)
       $('body').prepend(this.$canvas)
       this.ctx.scale(this.scale,this.scale)
     },
     initializeBots: function () {
-      var numOfCells = this.width * this.height
+      var numOfCells = this.size * this.size
       var numOfBots = parseInt(numOfCells * this.densityPercent / 100)
       _.times(numOfBots, this.addBot.bind(this))
     },
     getRandCoords: function () {
-      return { r: randomInt(this.height - 1), c: randomInt(this.width - 1) }
+      return { r: randomInt(this.size - 1), c: randomInt(this.size - 1) }
     },
     updateBot: function (bot) {
       for (var i = 0; i < 4; i++) {
@@ -112,7 +112,7 @@ var Landscape = stampit({
       return this.trailModes[0]
     },
     clear: function () {
-      this.ctx.clearRect(0, 0, this.width, this.height)
+      this.ctx.clearRect(0, 0, this.size, this.size)
     }
   }
 })

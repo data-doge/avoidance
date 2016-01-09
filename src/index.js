@@ -1,7 +1,7 @@
 var $ = require('jquery')
 var Landscape = require('./landscape')
 
-var landscape = Landscape({width: 100, height: 100, densityPercent: 10, scale: 5})
+var landscape = Landscape({size: 100, densityPercent: 10, scale: 5})
 landscape.animate()
 
 $(document).on('keypress', function (e) {
