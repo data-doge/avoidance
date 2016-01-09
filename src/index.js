@@ -11,7 +11,7 @@ $(document).on('keypress', function (e) {
     case 112: landscape.toggleAnimation(); break // 'p'
     case 116: landscape.switchTrailMode(); break // 't'
     case 100: landscape.toggleExistenceOfDeath(); break // 'd'
-    case 99: landscape.reset(); break; // 'c'
-    case 114: landscape.switchBotAvoidanceAlgorithm(); break; // 'r'
+    case 114: landscape.reset(); break; // 'r'
+    case 99: landscape.switchBotAvoidanceAlgorithm(); break; // 'c'
   }
 })
