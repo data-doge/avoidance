@@ -13,9 +13,10 @@ var Landscape = stampit({
     isOn: true,
     thingsCanDie: true,
     collisionsAvoided: 0,
-    size: 200,
-    densityPercent: 30,
-    bots: []
+    size: 50,
+    densityPercent: 20,
+    bots: [],
+    spawnModes: ['random', 'spiral', 'center', 'diagonal']
   },
   init: function () {
     this.$botCounter = $('#bot-count')
@@ -56,6 +57,9 @@ var Landscape = stampit({
     },
     switchTrailMode: function () {
       this.trailModes = rotate(this.trailModes, 1)
+    },
+    switchSpawnMode: function () {
+      this.spawnModes = rotate(this.spawnModes, 1)
     },
     toggleExistenceOfDeath: function () {
       this.thingsCanDie = !this.thingsCanDie
@@ -110,6 +114,9 @@ var Landscape = stampit({
     },
     trailMode: function () {
       return this.trailModes[0]
+    },
+    spawnMode: function () {
+      return this.spawnModes[0]
     },
     clear: function () {
       this.ctx.clearRect(0, 0, this.size, this.size)
