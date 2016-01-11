@@ -16,7 +16,8 @@ var Landscape = stampit({
     size: 100,
     densityPercent: 0,
     bots: [],
-    spawnModes: ['random', 'center', 'diagonal', 'spiral']
+    spawnModes: ['random', 'center', 'diagonal', 'spiral'],
+    nextSpawnCoords: {r: 0, c: 0}
   },
   init: function () {
     this.$botCounter = $('#bot-count')
@@ -28,14 +29,8 @@ var Landscape = stampit({
   },
   methods: {
     addBot: function () {
-      var coords;
-      switch(this.spawnMode()) {
-        case 'random':
-          coords = this.getRandCoords(); break
-        case 'center':
-          coords = this.getCenterCoords(); break
-      }
-      var bot = Bot(_.merge(coords, {landscape: this}))
+      this.calculateNextSpawnCoords()
+      var bot = Bot(_.merge(this.nextSpawnCoords, {landscape: this}))
       this.bots.push(bot)
       this.grid.set(bot.r, bot.c, bot)
       bot.render()
@@ -87,12 +82,17 @@ var Landscape = stampit({
       var numOfBots = parseInt(numOfCells * this.densityPercent / 100)
       _.times(numOfBots, this.addBot.bind(this))
     },
-    getRandCoords: function () {
-      return { r: randomInt(this.size - 1), c: randomInt(this.size - 1) }
-    },
-    getCenterCoords: function () {
-      var center = parseInt(this.size / 2 - 1)
-      return { r: center, c: center}
+    calculateNextSpawnCoords: function () {
+      var coords;
+      switch (this.spawnMode()) {
+        case 'random':
+          coords = { r: randomInt(this.size - 1), c: randomInt(this.size - 1) }
+          break;
+        case 'center':
+          coords = { r: parseInt(this.size / 2 - 1), c: parseInt(this.size / 2 - 1)}
+          break;
+      }
+      this.nextSpawnCoords = coords
     },
     updateBot: function (bot) {
       for (var i = 0; i < 4; i++) {
