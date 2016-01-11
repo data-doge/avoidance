@@ -13,9 +13,12 @@ var Landscape = stampit({
     isOn: true,
     thingsCanDie: true,
     collisionsAvoided: 0,
-    size: 200,
-    densityPercent: 30,
-    bots: []
+    size: 500,
+    densityPercent: 0,
+    bots: [],
+    spawnModes: ['random', 'center', 'diagonal', 'spiral'],
+    spawnCoords: {r: 0, c: 0},
+    polarSpawnParams: {radius: 0, radians: 0, growing: true}
   },
   init: function () {
     this.$botCounter = $('#bot-count')
@@ -26,12 +29,16 @@ var Landscape = stampit({
     this.initializeBots()
   },
   methods: {
-    addBot: function () {
-      var bot = Bot(_.merge(this.getRandCoords(), {landscape: this}))
-      this.bots.push(bot)
-      this.grid.set(bot.r, bot.c, bot)
-      bot.render()
-      this.updateBotCount()
+    addBot: function (num) {
+      this.calculateNextSpawnCoords()
+      var self = this
+      _.times(num || 1, function () {
+        var bot = Bot(_.merge(self.spawnCoords, {landscape: self}))
+        self.bots.push(bot)
+        self.grid.set(bot.r, bot.c, bot)
+        bot.render()
+        self.updateBotCount()
+      })
     },
     update: function () {
       switch (this.trailMode()) {
@@ -57,6 +64,12 @@ var Landscape = stampit({
     switchTrailMode: function () {
       this.trailModes = rotate(this.trailModes, 1)
     },
+    switchSpawnMode: function () {
+      this.spawnCoords = this.getCenterCoords()
+      this.polarSpawnParams = {radius: 0, radians: 0}
+      this.spawnModes = rotate(this.spawnModes, 1)
+      console.log(this.spawnMode())
+    },
     toggleExistenceOfDeath: function () {
       this.thingsCanDie = !this.thingsCanDie
     },
@@ -69,8 +82,6 @@ var Landscape = stampit({
     switchBotAvoidanceAlgorithm: function () {
       Bot.fixed.refs.switchAvoidanceAlgorithm()
     },
-    size: function () {
-    },
 
     // private
     initializeBots: function () {
@@ -78,8 +89,38 @@ var Landscape = stampit({
       var numOfBots = parseInt(numOfCells * this.densityPercent / 100)
       _.times(numOfBots, this.addBot.bind(this))
     },
+    calculateNextSpawnCoords: function () {
+      switch (this.spawnMode()) {
+        case 'random': this.spawnCoords = this.getRandCoords(); break
+        case 'center': this.spawnCoords = this.getCenterCoords(); break
+        case 'diagonal': this.spawnCoords = this.getNextDiagonalCoords(); break
+        case 'spiral': this.spawnCoords = this.getNextSpiralCoords(); break
+      }
+    },
     getRandCoords: function () {
       return { r: randomInt(this.size - 1), c: randomInt(this.size - 1) }
+    },
+    getCenterCoords: function () {
+      return { r: parseInt(this.size / 2 - 1), c: parseInt(this.size / 2 - 1) }
+    },
+    getNextDiagonalCoords: function () {
+      var r = this.spawnCoords.r, c = this.spawnCoords.c, size = this.size
+      return { r: (r + 1) % (size - 1), c: (c + 1) % (size - 1) }
+    },
+    getNextSpiralCoords: function () {
+      var params = this.polarSpawnParams, centerCoords = this.getCenterCoords()
+      var radius = params.radius, radians = params.radians, growing = params.growing
+
+      growing ? radius += this.size / 1000 : radius -= this.size / 1000
+      if (radius > (this.size / 2) - 1) { growing = false }
+      if (radius < 1) { growing = true }
+      radians = (radians + 0.1) % (Math.PI * 2)
+      this.polarSpawnParams = { radius: radius, radians: radians, growing: growing }
+
+      return {
+        r: centerCoords.r + parseInt(radius * Math.sin(radians)),
+        c: centerCoords.c + parseInt(radius * Math.cos(radians))
+      }
     },
     updateBot: function (bot) {
       for (var i = 0; i < 4; i++) {
@@ -110,6 +151,9 @@ var Landscape = stampit({
     },
     trailMode: function () {
       return this.trailModes[0]
+    },
+    spawnMode: function () {
+      return this.spawnModes[0]
     },
     clear: function () {
       this.ctx.clearRect(0, 0, this.size, this.size)
