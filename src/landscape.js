@@ -17,7 +17,8 @@ var Landscape = stampit({
     densityPercent: 0,
     bots: [],
     spawnModes: ['random', 'center', 'diagonal', 'spiral'],
-    spawnCoords: {r: 0, c: 0}
+    spawnCoords: {r: 0, c: 0},
+    polarSpawnParams: {radius: 0, radians: 0, growing: true}
   },
   init: function () {
     this.$botCounter = $('#bot-count')
@@ -28,13 +29,16 @@ var Landscape = stampit({
     this.initializeBots()
   },
   methods: {
-    addBot: function () {
+    addBot: function (num) {
       this.calculateNextSpawnCoords()
-      var bot = Bot(_.merge(this.spawnCoords, {landscape: this}))
-      this.bots.push(bot)
-      this.grid.set(bot.r, bot.c, bot)
-      bot.render()
-      this.updateBotCount()
+      var self = this
+      _.times(num || 1, function () {
+        var bot = Bot(_.merge(self.spawnCoords, {landscape: self}))
+        self.bots.push(bot)
+        self.grid.set(bot.r, bot.c, bot)
+        bot.render()
+        self.updateBotCount()
+      })
     },
     update: function () {
       switch (this.trailMode()) {
@@ -62,7 +66,9 @@ var Landscape = stampit({
     },
     switchSpawnMode: function () {
       this.spawnCoords = this.getCenterCoords()
+      this.polarSpawnParams = {radius: 0, radians: 0}
       this.spawnModes = rotate(this.spawnModes, 1)
+      console.log(this.spawnMode())
     },
     toggleExistenceOfDeath: function () {
       this.thingsCanDie = !this.thingsCanDie
@@ -88,6 +94,7 @@ var Landscape = stampit({
         case 'random': this.spawnCoords = this.getRandCoords(); break
         case 'center': this.spawnCoords = this.getCenterCoords(); break
         case 'diagonal': this.spawnCoords = this.getNextDiagonalCoords(); break
+        case 'spiral': this.spawnCoords = this.getNextSpiralCoords(); break
       }
     },
     getRandCoords: function () {
@@ -98,9 +105,22 @@ var Landscape = stampit({
     },
     getNextDiagonalCoords: function () {
       var r = this.spawnCoords.r, c = this.spawnCoords.c, size = this.size
+      return { r: (r + 1) % (size - 1), c: (c + 1) % (size - 1) }
+    },
+    getNextSpiralCoords: function () {
+      var params = this.polarSpawnParams, centerCoords = this.getCenterCoords()
+      var radius = params.radius, radians = params.radians, growing = params.growing
+
+      // TODO: make radius size dependent
+      growing ? radius += 0.1 : radius -= 0.1
+      if (radius > (this.size / 2) - 1) { growing = false }
+      if (radius < 1) { growing = true }
+      radians = (radians + 6 * 0.0174533) % (Math.PI * 2)
+      this.polarSpawnParams = { radius: radius, radians: radians, growing: growing }
+
       return {
-        r: (r + 1) % (size - 1),
-        c: (c + 1) % (size - 1)
+        r: centerCoords.r + parseInt(radius * Math.sin(radians)),
+        c: centerCoords.c + parseInt(radius * Math.cos(radians))
       }
     },
     updateBot: function (bot) {
