@@ -13,7 +13,7 @@ var Landscape = stampit({
     isOn: true,
     thingsCanDie: true,
     collisionsAvoided: 0,
-    size: 100,
+    size: 500,
     densityPercent: 0,
     bots: [],
     spawnModes: ['random', 'center', 'diagonal', 'spiral'],
@@ -111,11 +111,10 @@ var Landscape = stampit({
       var params = this.polarSpawnParams, centerCoords = this.getCenterCoords()
       var radius = params.radius, radians = params.radians, growing = params.growing
 
-      // TODO: make radius size dependent
-      growing ? radius += 0.1 : radius -= 0.1
+      growing ? radius += this.size / 1000 : radius -= this.size / 1000
       if (radius > (this.size / 2) - 1) { growing = false }
       if (radius < 1) { growing = true }
-      radians = (radians + 6 * 0.0174533) % (Math.PI * 2)
+      radians = (radians + 0.1) % (Math.PI * 2)
       this.polarSpawnParams = { radius: radius, radians: radians, growing: growing }
 
       return {
