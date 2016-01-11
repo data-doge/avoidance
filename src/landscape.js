@@ -13,10 +13,10 @@ var Landscape = stampit({
     isOn: true,
     thingsCanDie: true,
     collisionsAvoided: 0,
-    size: 50,
-    densityPercent: 20,
+    size: 100,
+    densityPercent: 0,
     bots: [],
-    spawnModes: ['random', 'spiral', 'center', 'diagonal']
+    spawnModes: ['random', 'center', 'diagonal', 'spiral']
   },
   init: function () {
     this.$botCounter = $('#bot-count')
@@ -28,7 +28,14 @@ var Landscape = stampit({
   },
   methods: {
     addBot: function () {
-      var bot = Bot(_.merge(this.getRandCoords(), {landscape: this}))
+      var coords;
+      switch(this.spawnMode()) {
+        case 'random':
+          coords = this.getRandCoords(); break
+        case 'center':
+          coords = this.getCenterCoords(); break
+      }
+      var bot = Bot(_.merge(coords, {landscape: this}))
       this.bots.push(bot)
       this.grid.set(bot.r, bot.c, bot)
       bot.render()
@@ -82,6 +89,10 @@ var Landscape = stampit({
     },
     getRandCoords: function () {
       return { r: randomInt(this.size - 1), c: randomInt(this.size - 1) }
+    },
+    getCenterCoords: function () {
+      var center = parseInt(this.size / 2 - 1)
+      return { r: center, c: center}
     },
     updateBot: function (bot) {
       for (var i = 0; i < 4; i++) {
