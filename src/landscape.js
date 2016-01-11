@@ -17,7 +17,7 @@ var Landscape = stampit({
     densityPercent: 0,
     bots: [],
     spawnModes: ['random', 'center', 'diagonal', 'spiral'],
-    nextSpawnCoords: {r: 0, c: 0}
+    spawnCoords: {r: 0, c: 0}
   },
   init: function () {
     this.$botCounter = $('#bot-count')
@@ -30,7 +30,7 @@ var Landscape = stampit({
   methods: {
     addBot: function () {
       this.calculateNextSpawnCoords()
-      var bot = Bot(_.merge(this.nextSpawnCoords, {landscape: this}))
+      var bot = Bot(_.merge(this.spawnCoords, {landscape: this}))
       this.bots.push(bot)
       this.grid.set(bot.r, bot.c, bot)
       bot.render()
@@ -61,6 +61,7 @@ var Landscape = stampit({
       this.trailModes = rotate(this.trailModes, 1)
     },
     switchSpawnMode: function () {
+      this.spawnCoords = this.getCenterCoords()
       this.spawnModes = rotate(this.spawnModes, 1)
     },
     toggleExistenceOfDeath: function () {
@@ -83,16 +84,24 @@ var Landscape = stampit({
       _.times(numOfBots, this.addBot.bind(this))
     },
     calculateNextSpawnCoords: function () {
-      var coords;
       switch (this.spawnMode()) {
-        case 'random':
-          coords = { r: randomInt(this.size - 1), c: randomInt(this.size - 1) }
-          break;
-        case 'center':
-          coords = { r: parseInt(this.size / 2 - 1), c: parseInt(this.size / 2 - 1)}
-          break;
+        case 'random': this.spawnCoords = this.getRandCoords(); break
+        case 'center': this.spawnCoords = this.getCenterCoords(); break
+        case 'diagonal': this.spawnCoords = this.getNextDiagonalCoords(); break
       }
-      this.nextSpawnCoords = coords
+    },
+    getRandCoords: function () {
+      return { r: randomInt(this.size - 1), c: randomInt(this.size - 1) }
+    },
+    getCenterCoords: function () {
+      return { r: parseInt(this.size / 2 - 1), c: parseInt(this.size / 2 - 1) }
+    },
+    getNextDiagonalCoords: function () {
+      var r = this.spawnCoords.r, c = this.spawnCoords.c, size = this.size
+      return {
+        r: (r + 1) % (size - 1),
+        c: (c + 1) % (size - 1)
+      }
     },
     updateBot: function (bot) {
       for (var i = 0; i < 4; i++) {
