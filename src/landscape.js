@@ -87,7 +87,8 @@ var Landscape = stampit({
       this.densityPercent = this.maxDensityPercent()
       var numOfCells = this.size * this.size
       var numOfBots = parseInt(numOfCells * this.densityPercent / 100)
-      _.times(numOfBots, this.addBot.bind(this))
+      var self = this
+      _.times(numOfBots, function () { self.addBot() })
     },
     calculateNextSpawnCoords: function () {
       switch (this.spawnMode()) {
