@@ -13,8 +13,7 @@ var Landscape = stampit({
     isOn: true,
     thingsCanDie: true,
     collisionsAvoided: 0,
-    size: 500,
-    densityPercent: 0,
+    size: 50,
     bots: [],
     spawnModes: ['random', 'center', 'diagonal', 'spiral'],
     spawnCoords: {r: 0, c: 0},
@@ -85,6 +84,7 @@ var Landscape = stampit({
 
     // private
     initializeBots: function () {
+      this.densityPercent = this.maxDensityPercent()
       var numOfCells = this.size * this.size
       var numOfBots = parseInt(numOfCells * this.densityPercent / 100)
       _.times(numOfBots, this.addBot.bind(this))
@@ -157,6 +157,10 @@ var Landscape = stampit({
     },
     clear: function () {
       this.ctx.clearRect(0, 0, this.size, this.size)
+    },
+    maxDensityPercent: function () {
+      var max = 800000 / Math.pow(this.size, 2)
+      return max > 50 ? 50 : max
     }
   }
 })
