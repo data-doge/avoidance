@@ -15,7 +15,7 @@ var Landscape = stampit({
     collisionsAvoided: 0,
     size: 50,
     bots: [],
-    spawnModes: ['random', 'center', 'diagonal', 'spiral'],
+    spawnModes: ['random', 'diagonal', 'spiral'],
     spawnCoords: {r: 0, c: 0},
     polarSpawnParams: {radius: 0, radians: 0, growing: true}
   },
