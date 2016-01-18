@@ -16,3 +16,18 @@ $(document).on('keypress', function (e) {
     case 115: landscape.switchSpawnMode(); break              // 's'
   }
 })
+
+var $liveControlsPanel = $('#live-controls-panel')
+var $simConstructorPanel = $('#sim-constructor-panel')
+var $newSimBtn = $('#new-sim-btn')
+var $exitSimConstructorBtn = $('#exit-sim-constructor-btn')
+
+$newSimBtn.click(function (e) {
+  $liveControlsPanel.hide()
+  $simConstructorPanel.show()
+})
+
+$exitSimConstructorBtn.on('click', function (e) {
+  $simConstructorPanel.hide()
+  $liveControlsPanel.show()
+})
