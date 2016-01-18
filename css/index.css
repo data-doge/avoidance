@@ -7,6 +7,7 @@ body {
   cursor: crosshair;
   background: black;
   font-family: 'Roboto', sans-serif;
+  color: white;
 }
 
 #main-container {
@@ -23,19 +24,55 @@ body {
   width: 300px;
   height: 500px;
   margin-left: 30px;
+  font-size: 14px;
+}
+
+#live-controls-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+}
+
+#sim-constructor-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.input-label {
+  display: inline-block;
+  border: 1px solid white;
+  padding: 2px 6px;
+  background: #77C4D3;
+}
+
+.input-container {
+  margin-bottom: 10px;
 }
 
 .btn {
   cursor: pointer;
-  padding: 2px 6px;
   display: inline-block;
+  padding: 2px 6px;
   border: 1px solid white;
-  color: white;
   text-align: center;
-  font-size: 14px;
   letter-spacing: 2px;
   margin-bottom: 10px;
   transition: 0.5s;
+}
+
+.number-input {
+  display: inline-block;
+  padding: 2px 6px;
+  background: transparent;
+  border: 1px solid white;
+  position: relative;
+  left: -5px;
+  width: 40px;
+  text-align: center;
 }
 
 .btn:hover {
@@ -56,3 +93,14 @@ body {
   bottom: 70px;
   text-align: center;
 }*/
+
+/* overrides */
+input[type="number"]:focus {
+  outline: none;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
