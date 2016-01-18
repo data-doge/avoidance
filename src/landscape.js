@@ -73,7 +73,7 @@ var Landscape = stampit({
     toggleExistenceOfDeath: function () {
       this.thingsCanDie = !this.thingsCanDie
     },
-    reset: function () {
+    empty: function () {
       this.grid = new Fixed2DArray(this.size, this.size, null)
       this.clear()
       this.bots = []
