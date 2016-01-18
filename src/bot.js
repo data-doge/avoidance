@@ -6,6 +6,7 @@ var randomInt = require('random-int')
 
 var Bot = stampit({
   refs: {
+    anxietyLevel: 50,
     colors: ["#F6F792", "#77C4D3", "#DAEDE2", "#EA2E49", "#FFFFFF"],
     avoidanceAlgorithms: ['right', 'left', 'back', 'random'],
     switchAvoidanceAlgorithm: function () {
@@ -45,7 +46,7 @@ var Bot = stampit({
       return this.radius > 0.1
     },
     dieSlowly: function () {
-      this.radius -= 0.01
+      this.radius -= 0.0002 * this.anxietyLevel
     },
     moveForward: function () {
       var coords = this.nextCoords()

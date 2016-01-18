@@ -14,6 +14,7 @@ var Landscape = stampit({
     thingsCanDie: true,
     collisionsAvoided: 0,
     size: 50,
+    overallBotAnxietyLevel: 20,
     bots: [],
     spawnModes: ['random', 'diagonal', 'spiral'],
     spawnCoords: {r: 0, c: 0},
@@ -87,6 +88,7 @@ var Landscape = stampit({
       this.densityPercent = this.maxDensityPercent()
       var numOfCells = this.size * this.size
       var numOfBots = parseInt(numOfCells * this.densityPercent / 100)
+      Bot.fixed.refs.anxietyLevel = this.overallBotAnxietyLevel
       var self = this
       _.times(numOfBots, function () { self.addBot() })
     },
