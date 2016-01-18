@@ -24,10 +24,10 @@ var $exitSimConstructorBtn = $('#exit-sim-constructor-btn')
 
 $newSimBtn.click(function (e) {
   $liveControlsPanel.hide()
-  $simConstructorPanel.show()
+  $simConstructorPanel.css('display', 'flex')
 })
 
 $exitSimConstructorBtn.on('click', function (e) {
   $simConstructorPanel.hide()
-  $liveControlsPanel.show()
+  $liveControlsPanel.css('display', 'flex')
 })
