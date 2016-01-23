@@ -12,6 +12,7 @@ built on @ahdinosaur's [slush pages](https://github.com/ahdinosaur/slush-pages)
 ```
 git clone https://github.com/data-doge/avoidance.git
 cd avoidance
+npm install
 npm start
 ```
 
