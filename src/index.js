@@ -25,6 +25,7 @@ var $newSimBtn = $('#redesign-landscape-btn')
 var $redesignLandscapeSubmitBtns = $('#redesign-landscape-submit-btns')
 var $startBtn = $('#start-btn')
 var $stopBtn = $('#stop-btn')
+var $clearBtn = $('#clear-btn')
 
 var $exitRedesignLandscapeBtn = $('#cancel-redesign-landscape-btn')
 var $completeRedesignLandscapeBtn = $('#complete-redesign-landscape-btn')
@@ -49,4 +50,8 @@ $startBtn.click(function (e) {
   landscape.toggleAnimation()
   $startBtn.hide()
   $stopBtn.show()
+})
+
+$clearBtn.click(function (e) {
+  landscape.empty()
 })
