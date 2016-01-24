@@ -9,11 +9,9 @@ var rotate = require('rotate-array')
 var Landscape = stampit({
   refs: {
     trailModes: ['fade', 'full', 'none'],
-    ctx: $('#landscape')[0].getContext('2d'),
     isOn: true,
     thingsCanDie: true,
     collisionsAvoided: 0,
-    size: 50,
     overallBotAnxietyLevel: 20,
     bots: [],
     spawnModes: ['random', 'diagonal', 'spiral'],
@@ -23,12 +21,21 @@ var Landscape = stampit({
   init: function () {
     this.$botCounter = $('#bot-count')
     this.$collisionAvoidedCounter = $('#collisions-avoided-count')
-    this.scale = 500 / this.size
-    this.ctx.scale(this.scale, this.scale)
-    this.grid = new Fixed2DArray(this.size, this.size, null)
-    this.initializeBots()
+    this.initialize({size: 100, densityPercent: this.maxDensityPercent(100)})
   },
+
   methods: {
+    initialize: function (params) {
+      $('#landscape').remove()
+      var $canvas = $('<canvas id="landscape" width="500" height="500"></canvas>')
+      $('#main-container').prepend($canvas)
+      this.size = params.size
+      this.ctx = $canvas[0].getContext('2d')
+      this.scale = 500 / this.size
+      this.ctx.scale(this.scale, this.scale)
+      this.grid = new Fixed2DArray(this.size, this.size, null)
+      this.initializeBots(params.densityPercent)
+    },
     addBot: function (num) {
       this.calculateNextSpawnCoords()
       var self = this
@@ -93,8 +100,8 @@ var Landscape = stampit({
     },
 
     // private
-    initializeBots: function () {
-      this.densityPercent = this.maxDensityPercent()
+    initializeBots: function (densityPercent) {
+      this.densityPercent = densityPercent || this.maxDensityPercent()
       var numOfCells = this.size * this.size
       var numOfBots = parseInt(numOfCells * this.densityPercent / 100)
       Bot.fixed.refs.anxietyLevel = this.overallBotAnxietyLevel
