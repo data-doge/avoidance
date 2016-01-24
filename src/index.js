@@ -26,6 +26,7 @@ var $redesignLandscapeSubmitBtns = $('#redesign-landscape-submit-btns')
 var $startBtn = $('#start-btn')
 var $stopBtn = $('#stop-btn')
 var $clearBtn = $('#clear-btn')
+var $restartBtn = $('#restart-btn')
 
 var $exitRedesignLandscapeBtn = $('#cancel-redesign-landscape-btn')
 var $completeRedesignLandscapeBtn = $('#complete-redesign-landscape-btn')
@@ -54,4 +55,8 @@ $startBtn.click(function (e) {
 
 $clearBtn.click(function (e) {
   landscape.empty()
+})
+
+$restartBtn.click(function (e) {
+  landscape.reset()
 })
