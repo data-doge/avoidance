@@ -78,7 +78,7 @@ bindSanitizerToNumberInput($landscapeSizeField, false, function (size) {
 })
 
 $completeRedesignLandscapeBtn.click(function () {
-  var size = parseInt($landscapeSizeField.val()) || 2
+  var size = parseInt($landscapeSizeField.val()) || 1
   var densityPercent = parseFloat($landscapeDensityField.val()).toFixed(1)
   landscape.empty()
   landscape.initialize({
