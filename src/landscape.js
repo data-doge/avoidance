@@ -82,7 +82,7 @@ var Landscape = stampit({
     switchBotAvoidanceAlgorithm: function () {
       Bot.fixed.refs.switchAvoidanceAlgorithm()
     },
-    reset: function () {
+    restart: function () {
       this.empty()
       this.initializeBots()
     },

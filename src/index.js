@@ -67,7 +67,7 @@ $clearBtn.click(function (e) {
 })
 
 $restartBtn.click(function (e) {
-  landscape.reset()
+  landscape.restart()
 })
 
 bindSanitizerToNumberInput($landscapeSizeField, false, function (size) {
