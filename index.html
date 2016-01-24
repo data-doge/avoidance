@@ -63,12 +63,14 @@
       <div id="redesign-landscape-panel">
         <div class="input-container brighten-on-hover">
           <label class="input-label" for="size">size</label>
-          <input class="number-input" type="number" name="size" value="100" min="0" max="1000" />
+          <input class="number-input" id="landscape-size-field" type="number" name="size" value="100" min="0" max="1000" />
+          <div class="input-helper-text">(0 - 100)</div>
         </div>
 
         <div class="input-container brighten-on-hover">
           <label class="input-label" for="density">density</label>
-          <input class="number-input" type="number" name="density" value="1" min="" max="" />
+          <input class="number-input" id="landscape-density-field" type="number" name="density" value="50.00" min="0.00" max="50.00" />
+          <div class="input-helper-text">(0.00 - <span id="max-density-indicator">50.00</span>)</div>
         </div>
 
         <div id="redesign-landscape-submit-btns">

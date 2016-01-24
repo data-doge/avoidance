@@ -73,6 +73,11 @@ body {
   text-align: center;
 }
 
+.input-helper-text {
+  display: inline-block;
+  padding: 4px 8px;
+}
+
 /* live controls panel */
 
 #live-controls-panel {
