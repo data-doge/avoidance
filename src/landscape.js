@@ -42,7 +42,7 @@ var Landscape = stampit({
     },
     update: function () {
       switch (this.trailMode()) {
-        case 'none': this.clear(); break
+        case 'none': this.clearCanvas(); break
         case 'fade':
           this.ctx.fillStyle = 'rgba(0,0,0,0.1)'
           this.ctx.fillRect(0, 0, this.size, this.size)
@@ -75,7 +75,7 @@ var Landscape = stampit({
     },
     empty: function () {
       this.grid = new Fixed2DArray(this.size, this.size, null)
-      this.clear()
+      this.clearCanvas()
       this.bots = []
       this.updateBotCount()
     },
@@ -167,7 +167,7 @@ var Landscape = stampit({
     spawnMode: function () {
       return this.spawnModes[0]
     },
-    clear: function () {
+    clearCanvas: function () {
       this.ctx.clearRect(0, 0, this.size, this.size)
     }
   }
