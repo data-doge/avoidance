@@ -86,6 +86,11 @@ var Landscape = stampit({
       this.empty()
       this.initializeBots()
     },
+    maxDensityPercent: function (size) {
+      size = size || this.size
+      var max = 800000 / Math.pow(size, 2)
+      return max > 50 ? 50 : max
+    },
 
     // private
     initializeBots: function () {
@@ -164,10 +169,6 @@ var Landscape = stampit({
     },
     clear: function () {
       this.ctx.clearRect(0, 0, this.size, this.size)
-    },
-    maxDensityPercent: function () {
-      var max = 800000 / Math.pow(this.size, 2)
-      return max > 50 ? 50 : max
     }
   }
 })

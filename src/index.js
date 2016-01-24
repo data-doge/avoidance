@@ -5,7 +5,7 @@ var landscape = Landscape()
 landscape.animate()
 
 $(document).on('keypress', function (e) {
-  console.log('e.keyCode: ', e.keyCode)
+  // console.log('e.keyCode: ', e.keyCode)
   switch (e.keyCode) {
     case 97: landscape.addBot(1); break                       // 'a'
     case 112: landscape.toggleAnimation(); break              // 'p'
@@ -16,6 +16,8 @@ $(document).on('keypress', function (e) {
     case 115: landscape.switchSpawnMode(); break              // 's'
   }
 })
+
+// jQuery objects
 
 var $liveControlsPanel = $('#live-controls-panel')
 var $redesignLandscapePanel = $('#redesign-landscape-panel')
@@ -28,8 +30,13 @@ var $stopBtn = $('#stop-btn')
 var $clearBtn = $('#clear-btn')
 var $restartBtn = $('#restart-btn')
 
+var $landscapeSizeField = $('#landscape-size-field')
+var $landscapeDensityField = $('#landscape-density-field')
+var $maxDensityIndicator = $('#max-density-indicator')
 var $exitRedesignLandscapeBtn = $('#cancel-redesign-landscape-btn')
 var $completeRedesignLandscapeBtn = $('#complete-redesign-landscape-btn')
+
+// event listeners
 
 $newSimBtn.click(function (e) {
   $liveControlsPanel.hide()
@@ -59,4 +66,15 @@ $clearBtn.click(function (e) {
 
 $restartBtn.click(function (e) {
   landscape.reset()
+})
+
+$landscapeSizeField.bind('propertychange change click keyup input paste', function () {
+  var $this = $(this), size = parseInt($this.val())
+  if ($this.data('oldSize') != size) {
+    $this.data('oldSize', size)
+    var maxDensityPercent = landscape.maxDensityPercent(size).toFixed(2)
+    $landscapeDensityField.attr('max', maxDensityPercent)
+    $maxDensityIndicator.text(maxDensityPercent)
+    $landscapeDensityField.val(maxDensityPercent)
+  }
 })
