@@ -27,7 +27,7 @@ $newSimBtn.click(function (e) {
   $simConstructorPanel.css('display', 'flex')
 })
 
-$exitSimConstructorBtn.on('click', function (e) {
+$exitSimConstructorBtn.click(function (e) {
   $simConstructorPanel.hide()
   $liveControlsPanel.css('display', 'flex')
 })
