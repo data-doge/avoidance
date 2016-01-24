@@ -92,6 +92,12 @@ body {
   color: #99FF00;
 }
 
+#stop-btn {
+  display: none;
+  border: 1px solid pink;
+  color: pink;
+}
+
 /* redesign landscape panel */
 
 #redesign-landscape-panel {
