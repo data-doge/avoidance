@@ -77,6 +77,16 @@ bindSanitizerToNumberInput($landscapeSizeField, false, function (size) {
   $landscapeDensityField.val(maxDensityPercent)
 })
 
+$completeRedesignLandscapeBtn.click(function () {
+  var size = parseInt($landscapeSizeField.val()) || 2
+  var densityPercent = parseFloat($landscapeDensityField.val()).toFixed(1)
+  landscape.empty()
+  landscape.initialize({
+    size: size,
+    densityPercent: densityPercent
+  })
+})
+
 // helper fxns
 
 function bindSanitizerToNumberInput($input, isFloat, onChange) {
