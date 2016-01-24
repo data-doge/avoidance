@@ -1,3 +1,5 @@
+/* general */
+
 html, body {
   position: relative;
   height: 100%;
@@ -28,23 +30,9 @@ body {
   margin-left: 30px;
 }
 
-#live-controls-panel {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
-
-#sim-constructor-panel {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
-
 .input-container {
   margin-bottom: 10px;
-  opacity: 0.9;
+  opacity: 0.85;
 }
 
 .btn {
@@ -85,30 +73,58 @@ body {
   text-align: center;
 }
 
-#sim-constructor-panel {
+/* live controls panel */
+
+#live-controls-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+#redesign-landscape-btn {
+  border: 1px solid #F6F792;
+  color: #F6F792;
+}
+
+#start-btn {
+  border: 1px solid #99FF00;
+  color: #99FF00;
+}
+
+/* redesign landscape panel */
+
+#redesign-landscape-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+#redesign-landscape-panel {
   display: none;
 }
 
-#cancel-sim-constructor-btn {
-  border: 1px solid #EA2E49;
-  color: #EA2E49;
-}
-
-#complete-sim-constructor-btn {
+#complete-redesign-landscape-btn {
   border: 1px solid #99FF00;
   color: #99FF00;
   margin-right: 10px;
 }
 
+#cancel-redesign-landscape-btn {
+  border: 1px solid pink;
+  color: pink;
+}
+
 /* transitions */
 
 .brighten-on-hover {
-  opacity: 0.9;
+  opacity: 0.9 !important;
   transition: 0.5s;
 }
 
 .brighten-on-hover:hover {
-  opacity: 1;
+  opacity: 1 !important;
 }
 
 /* overrides */

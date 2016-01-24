@@ -18,18 +18,20 @@ $(document).on('keypress', function (e) {
 })
 
 var $liveControlsPanel = $('#live-controls-panel')
-var $simConstructorPanel = $('#sim-constructor-panel')
-var $newSimBtn = $('#new-sim-btn')
-var $exitSimConstructorBtn = $('#cancel-sim-constructor-btn')
-var $completeSimConstructorBtn = $('#complete-sim-constructor-btn')
-var $simConstructorSubmitBtns = $('#sim-constructor-submit-btns')
+var $redesignLandscapePanel = $('#redesign-landscape-panel')
+
+var $newSimBtn = $('#redesign-landscape-btn')
+
+var $redesignLandscapeSubmitBtns = $('#redesign-landscape-submit-btns')
+var $exitRedesignLandscapeBtn = $('#cancel-redesign-landscape-btn')
+var $completeRedesignLandscapeBtn = $('#complete-redesign-landscape-btn')
 
 $newSimBtn.click(function (e) {
   $liveControlsPanel.hide()
-  $simConstructorPanel.css('display', 'flex')
+  $redesignLandscapePanel.css('display', 'flex')
 })
 
-$simConstructorSubmitBtns.click(function (e) {
-  $simConstructorPanel.hide()
+$redesignLandscapeSubmitBtns.click(function (e) {
+  $redesignLandscapePanel.hide()
   $liveControlsPanel.css('display', 'flex')
 })

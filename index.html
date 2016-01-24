@@ -12,31 +12,25 @@
     <canvas id="landscape" width="500" height="500"></canvas>
     <div id="controls">
       <div id="live-controls-panel">
-        <div class="btn" id="new-sim-btn">new simulation</div>
-      </div>
+        <div class="btn brighten-on-hover" id="redesign-landscape-btn">redesign landscape</div>
 
-      <div id="sim-constructor-panel">
-        <div class="input-container">
-          <label class="input-label" for="landscape-size">landscape size</label>
-          <input class="number-input" type="number" name="landscape-size" value="100" min="0" max="1000" />
-        </div>
+        <div class="btn brighten-on-hover" id="start-btn">start</div>
 
-        <div class="input-container">
-          <label class="input-label" for="density">density</label>
-          <input class="number-input" type="number" name="density" value="1" min="" max="" />
-        </div>
+        <div class="btn brighten-on-hover" id="clear-btn">clear</div>
 
-        <div class="input-container">
+        <div class="btn brighten-on-hover" id="restart-btn">restart</div>
+
+        <div class="input-container brighten-on-hover">
           <label class="input-label" for="spawn-rate">spawn rate</label>
           <input class="number-input" type="number" name="spawn-rate" value="1" min="1" max="4" />
         </div>
 
-        <div class="input-container">
+        <div class="input-container brighten-on-hover">
           <label class="input-label" for="anxiety-level">anxiety level</label>
           <input class="number-input" type="number" name="anxiety-level" value="1" min="1" max="100" />
         </div>
 
-        <div class="input-container">
+        <div class="input-container brighten-on-hover">
           <label class="input-label" for="trail-mode">trail mode</label>
           <select class="select-input" name="trail-mode">
             <option value="none" selected>none</option>
@@ -45,7 +39,7 @@
           </select>
         </div>
 
-        <div class="input-container">
+        <div class="input-container brighten-on-hover">
           <label class="input-label" for="avoidance-algorithm">avoidance algorithm</label>
           <select class="select-input" name="avoidance-algorithm">
             <option value="right" selected>pivot right</option>
@@ -55,7 +49,7 @@
           </select>
         </div>
 
-        <div class="input-container">
+        <div class="input-container brighten-on-hover">
           <label class="input-label" for="spawn-mode">spawn mode</label>
           <select class="select-input" name="spawn-mode">
             <option value="random" selected>random</option>
@@ -63,10 +57,22 @@
             <option value="spiral">spiral</option>
           </select>
         </div>
+      </div>
 
-        <div id="sim-constructor-submit-btns">
-          <div class="btn" id="complete-sim-constructor-btn">mhm</div>
-          <div class="btn" id="cancel-sim-constructor-btn">nvm</div>
+      <div id="redesign-landscape-panel">
+        <div class="input-container brighten-on-hover">
+          <label class="input-label" for="size">size</label>
+          <input class="number-input" type="number" name="size" value="100" min="0" max="1000" />
+        </div>
+
+        <div class="input-container brighten-on-hover">
+          <label class="input-label" for="density">density</label>
+          <input class="number-input" type="number" name="density" value="1" min="" max="" />
+        </div>
+
+        <div id="redesign-landscape-submit-btns">
+          <div class="btn brighten-on-hover" id="complete-redesign-landscape-btn">mhm</div>
+          <div class="btn brighten-on-hover" id="cancel-redesign-landscape-btn">nvm</div>
         </div>
       </div>
     </div>
