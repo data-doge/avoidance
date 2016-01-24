@@ -88,12 +88,12 @@ body {
 }
 
 #start-btn {
+  display: none;
   border: 1px solid #99FF00;
   color: #99FF00;
 }
 
 #stop-btn {
-  display: none;
   border: 1px solid pink;
   color: pink;
 }

@@ -23,6 +23,9 @@ var $redesignLandscapePanel = $('#redesign-landscape-panel')
 var $newSimBtn = $('#redesign-landscape-btn')
 
 var $redesignLandscapeSubmitBtns = $('#redesign-landscape-submit-btns')
+var $startBtn = $('#start-btn')
+var $stopBtn = $('#stop-btn')
+
 var $exitRedesignLandscapeBtn = $('#cancel-redesign-landscape-btn')
 var $completeRedesignLandscapeBtn = $('#complete-redesign-landscape-btn')
 
@@ -34,4 +37,16 @@ $newSimBtn.click(function (e) {
 $redesignLandscapeSubmitBtns.click(function (e) {
   $redesignLandscapePanel.hide()
   $liveControlsPanel.css('display', 'flex')
+})
+
+$stopBtn.click(function (e) {
+  landscape.toggleAnimation()
+  $stopBtn.hide()
+  $startBtn.show()
+})
+
+$startBtn.click(function (e) {
+  landscape.toggleAnimation()
+  $startBtn.hide()
+  $stopBtn.show()
 })
