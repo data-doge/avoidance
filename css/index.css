@@ -63,7 +63,7 @@ body {
 }
 
 .btn:hover {
-  border-color: transparent;
+  border-color: transparent !important;
 }
 
 .input-label {
@@ -97,6 +97,17 @@ body {
 
 #sim-constructor-panel {
   display: none;
+}
+
+#cancel-sim-constructor-btn {
+  border: 1px solid #EA2E49;
+  color: #EA2E49;
+}
+
+#complete-sim-constructor-btn {
+  border: 1px solid #CDFF00;
+  color: #CDFF00;
+  margin-right: 10px;
 }
 
 /* overrides */
