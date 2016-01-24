@@ -34,6 +34,7 @@ var $restartBtn = $('#restart-btn')
 var $landscapeSizeField = $('#landscape-size-field')
 var $landscapeDensityField = $('#landscape-density-field')
 var $maxDensityIndicator = $('#max-density-indicator')
+
 var $exitRedesignLandscapeBtn = $('#cancel-redesign-landscape-btn')
 var $completeRedesignLandscapeBtn = $('#complete-redesign-landscape-btn')
 
@@ -69,7 +70,7 @@ $restartBtn.click(function (e) {
   landscape.reset()
 })
 
-bindSanitizerToNumberInput($landscapeSizeField, function (size) {
+bindSanitizerToNumberInput($landscapeSizeField, false, function (size) {
   var maxDensityPercent = landscape.maxDensityPercent(size).toFixed(2)
   $landscapeDensityField.attr('max', maxDensityPercent)
   $maxDensityIndicator.text(maxDensityPercent)
@@ -78,10 +79,11 @@ bindSanitizerToNumberInput($landscapeSizeField, function (size) {
 
 // helper fxns
 
-function bindSanitizerToNumberInput($input, onChange) {
+function bindSanitizerToNumberInput($input, isFloat, onChange) {
   $input.bind('propertychange change click keyup input paste', function () {
-    var $this = $(this), val = parseInt($this.val())
-    var min = parseFloat($this.attr('min')), max = parseFloat($this.attr('max'))
+    var parseNum = isFloat ? eval('parseFloat') : eval('parseInt')
+    var $this = $(this), val = parseNum($this.val())
+    var min = parseNum($this.attr('min')), max = parseNum($this.attr('max'))
 
     if (!_.inRange(val, min, max + 1)) {
       if (val < min) { val = min }
