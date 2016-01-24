@@ -20,14 +20,16 @@ $(document).on('keypress', function (e) {
 var $liveControlsPanel = $('#live-controls-panel')
 var $simConstructorPanel = $('#sim-constructor-panel')
 var $newSimBtn = $('#new-sim-btn')
-var $exitSimConstructorBtn = $('#exit-sim-constructor-btn')
+var $exitSimConstructorBtn = $('#cancel-sim-constructor-btn')
+var $completeSimConstructorBtn = $('#complete-sim-constructor-btn')
+var $simConstructorSubmitBtns = $('#sim-constructor-submit-btns')
 
 $newSimBtn.click(function (e) {
   $liveControlsPanel.hide()
   $simConstructorPanel.css('display', 'flex')
 })
 
-$exitSimConstructorBtn.click(function (e) {
+$simConstructorSubmitBtns.click(function (e) {
   $simConstructorPanel.hide()
   $liveControlsPanel.css('display', 'flex')
 })
