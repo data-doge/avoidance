@@ -22,8 +22,46 @@
         </div>
 
         <div class="input-container">
-          <label class="input-label" for="size">density percent</label>
+          <label class="input-label" for="size">density</label>
           <input class="number-input" type="number" name="size" value="1" min="" max="" />
+        </div>
+
+        <div class="input-container">
+          <label class="input-label" for="size">spawn rate</label>
+          <input class="number-input" type="number" name="size" value="1" min="1" max="4" />
+        </div>
+
+        <div class="input-container">
+          <label class="input-label" for="size">anxiety level</label>
+          <input class="number-input" type="number" name="size" value="1" min="1" max="100" />
+        </div>
+
+        <div class="input-container">
+          <label class="input-label" for="trail-mode">trail   mode</label>
+          <select class="select-input" name="trail-mode">
+            <option value="none" selected>none</option>
+            <option value="fade">fade</option>
+            <option value="full">full</option>
+          </select>
+        </div>
+
+        <div class="input-container">
+          <label class="input-label" for="avoidance-algorithm">avoidance algorithm</label>
+          <select class="select-input" name="avoidance-algorithm">
+            <option value="pivot-right" selected>pivot right</option>
+            <option value="pivot-left">pivot left</option>
+            <option value="turn-around">turn around</option>
+            <option value="random">random</option>
+          </select>
+        </div>
+
+        <div class="input-container">
+          <label class="input-label" for="spawn-mode">spawn mode</label>
+          <select class="select-input" name="spawn-mode">
+            <option value="random" selected>random</option>
+            <option value="diagonal">diagonal</option>
+            <option value="spiral">spiral</option>
+          </select>
         </div>
 
         <div class="btn" id="exit-sim-constructor-btn">exit</div>

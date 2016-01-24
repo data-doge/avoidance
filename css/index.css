@@ -79,20 +79,21 @@ body {
   text-align: center;
 }
 
+.select-input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 1px solid white;
+  background: transparent;
+  padding: 2px 6px;
+  border-radius: 0;
+  cursor: pointer;
+  text-align: center;
+}
+
 #sim-constructor-panel {
   display: none;
 }
-
-/*.container {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  color: white;
-  letter-spacing: 2px;
-  font-size: 12px;
-  bottom: 70px;
-  text-align: center;
-}*/
 
 /* overrides */
 input[type="number"]:focus {
@@ -103,4 +104,8 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+select:focus {
+  outline: none;
 }
