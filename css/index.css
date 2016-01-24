@@ -8,6 +8,8 @@ body {
   background: black;
   font-family: 'Roboto', sans-serif;
   color: white;
+  letter-spacing: 2px;
+  font-size: 12px;
 }
 
 #main-container {
@@ -24,7 +26,6 @@ body {
   width: 300px;
   height: 500px;
   margin-left: 30px;
-  font-size: 14px;
 }
 
 #live-controls-panel {
@@ -44,39 +45,28 @@ body {
 .input-container {
   margin-bottom: 10px;
   opacity: 0.9;
-  transition: 0.5s;
-}
-
-.input-container:hover {
-  opacity: 1;
 }
 
 .btn {
   cursor: pointer;
   display: inline-block;
-  padding: 2px 6px;
+  padding: 4px 8px;
   border: 1px solid white;
   text-align: center;
-  letter-spacing: 2px;
   margin-bottom: 10px;
-  transition: 0.5s;
-}
-
-.btn:hover {
-  border-color: transparent !important;
 }
 
 .input-label {
   float: left;
   border: 1px solid white;
-  padding: 2px 6px;
+  padding: 4px 8px;
   background: #77C4D3;
   border-right: none;
 }
 
 .number-input {
   float: left;
-  padding: 2px 6px;
+  padding: 4px 8px;
   background: transparent;
   border: 1px solid white;
   width: 40px;
@@ -89,7 +79,7 @@ body {
   -moz-appearance: none;
   border: 1px solid white;
   background: transparent;
-  padding: 2px 6px;
+  padding: 4px 8px;
   border-radius: 0;
   cursor: pointer;
   text-align: center;
@@ -105,12 +95,29 @@ body {
 }
 
 #complete-sim-constructor-btn {
-  border: 1px solid #CDFF00;
-  color: #CDFF00;
+  border: 1px solid #99FF00;
+  color: #99FF00;
   margin-right: 10px;
 }
 
+/* transitions */
+
+.brighten-on-hover {
+  opacity: 0.9;
+  transition: 0.5s;
+}
+
+.brighten-on-hover:hover {
+  opacity: 1;
+}
+
 /* overrides */
+
+input, select {
+  letter-spacing: inherit;
+  font-size: inherit;
+}
+
 input[type="number"]:focus {
   outline: none;
 }
