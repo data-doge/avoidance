@@ -1,5 +1,6 @@
 var $ = require('jquery')
 var Landscape = require('./landscape')
+var _ = require('lodash')
 
 var landscape = Landscape()
 landscape.animate()
@@ -68,9 +69,17 @@ $restartBtn.click(function (e) {
   landscape.reset()
 })
 
-$landscapeSizeField.bind('propertychange change click keyup input paste', function () {
+// TODO: wrap into a fxn
+$landscapeSizeField.bind('propertychange change click keyup input paste', function (e) {
   var $this = $(this), size = parseInt($this.val())
-  if ($this.data('oldSize') != size) {
+  var min = parseInt($this.attr('min')), max = parseInt($this.attr('max'))
+  if (!_.inRange(size, min, max + 1)) {
+    if (size < min) { size = min }
+    if (size > max) { size = max }
+    $this.val(size)
+  }
+
+  if ($this.data('oldSize') !== size) {
     $this.data('oldSize', size)
     var maxDensityPercent = landscape.maxDensityPercent(size).toFixed(2)
     $landscapeDensityField.attr('max', maxDensityPercent)
