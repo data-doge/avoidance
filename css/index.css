@@ -22,6 +22,11 @@ body {
   justify-content: center;
 }
 
+#landscape {
+  width: 500px;
+  height: 500px;
+}
+
 #controls {
   border-left: 1px solid white;
   padding-left: 30px;
