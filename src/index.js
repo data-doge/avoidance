@@ -69,21 +69,29 @@ $restartBtn.click(function (e) {
   landscape.reset()
 })
 
-// TODO: wrap into a fxn
-$landscapeSizeField.bind('propertychange change click keyup input paste', function (e) {
-  var $this = $(this), size = parseInt($this.val())
-  var min = parseInt($this.attr('min')), max = parseInt($this.attr('max'))
-  if (!_.inRange(size, min, max + 1)) {
-    if (size < min) { size = min }
-    if (size > max) { size = max }
-    $this.val(size)
-  }
-
-  if ($this.data('oldSize') !== size) {
-    $this.data('oldSize', size)
-    var maxDensityPercent = landscape.maxDensityPercent(size).toFixed(2)
-    $landscapeDensityField.attr('max', maxDensityPercent)
-    $maxDensityIndicator.text(maxDensityPercent)
-    $landscapeDensityField.val(maxDensityPercent)
-  }
+bindSanitizerToNumberInput($landscapeSizeField, function (size) {
+  var maxDensityPercent = landscape.maxDensityPercent(size).toFixed(2)
+  $landscapeDensityField.attr('max', maxDensityPercent)
+  $maxDensityIndicator.text(maxDensityPercent)
+  $landscapeDensityField.val(maxDensityPercent)
 })
+
+// helper fxns
+
+function bindSanitizerToNumberInput($input, onChange) {
+  $input.bind('propertychange change click keyup input paste', function () {
+    var $this = $(this), val = parseInt($this.val())
+    var min = parseFloat($this.attr('min')), max = parseFloat($this.attr('max'))
+
+    if (!_.inRange(val, min, max + 1)) {
+      if (val < min) { val = min }
+      if (val > max) { val = max }
+      $this.val(val)
+    }
+
+    if ($this.data('oldVal') !== val) {
+      $this.data('oldVal', val)
+      onChange(val)
+    }
+  })
+}
