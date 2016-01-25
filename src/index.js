@@ -98,14 +98,17 @@ $spawnBotBtn.mousedown(function () {
 
 function bindSanitizerToNumberInput($input, isFloat, onChange) {
   $input.bind('propertychange change click keyup input paste', function () {
-    var $this = $(this)
-    var val = +$this.val(), min = +$this.attr('min'), max = +$this.attr('max')
+    var $this = $(this), val = $this.val()
+    var min = +$this.attr('min'), max = +$this.attr('max')
     if (isFloat) {
       min = min.toFixed(2)
       max = max.toFixed(2)
     }
 
-    if (!_.inRange(val, min, max + 1)) {
+    if (val === "") {
+      val = ""
+    } else if (!_.inRange(val, min, max + 1)) {
+      val = +val
       if (val < min) { val = min }
       if (val > max) { val = max }
       $this.val(val)
