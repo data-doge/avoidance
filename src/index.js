@@ -76,6 +76,8 @@ bindSanitizerToNumberInput($landscapeSizeField, false, function (size) {
   $landscapeDensityField.val(maxDensityPercent)
 })
 
+bindSanitizerToNumberInput($landscapeDensityField, true)
+
 $completeRedesignLandscapeBtn.click(function () {
   var size = parseInt($landscapeSizeField.val()) || 1
   var densityPercent = parseFloat($landscapeDensityField.val()).toFixed(1)
@@ -83,7 +85,7 @@ $completeRedesignLandscapeBtn.click(function () {
   landscape.initialize({ size: size, densityPercent: densityPercent })
 })
 
-var spawnInterval;
+var spawnInterval
 $spawnBotBtn.mousedown(function () {
   spawnInterval = setInterval(function () {
     landscape.addBot()
@@ -96,9 +98,12 @@ $spawnBotBtn.mousedown(function () {
 
 function bindSanitizerToNumberInput($input, isFloat, onChange) {
   $input.bind('propertychange change click keyup input paste', function () {
-    var parseNum = isFloat ? eval('parseFloat') : eval('parseInt')
-    var $this = $(this), val = parseNum($this.val())
-    var min = parseNum($this.attr('min')), max = parseNum($this.attr('max'))
+    var $this = $(this)
+    var val = +$this.val(), min = +$this.attr('min'), max = +$this.attr('max')
+    if (isFloat) {
+      min = min.toFixed(2)
+      max = max.toFixed(2)
+    }
 
     if (!_.inRange(val, min, max + 1)) {
       if (val < min) { val = min }
@@ -108,7 +113,7 @@ function bindSanitizerToNumberInput($input, isFloat, onChange) {
 
     if ($this.data('oldVal') !== val) {
       $this.data('oldVal', val)
-      onChange(val)
+      if (onChange) { onChange(val) }
     }
   })
 }
