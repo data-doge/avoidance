@@ -9,7 +9,6 @@ $(document).on('keypress', function (e) {
   switch (e.keyCode) {
     case 97: landscape.addBot(); break                       // 'a'
     case 112: landscape.toggleAnimation(); break              // 'p'
-    case 116: landscape.switchTrailMode(); break              // 't'
     case 101: landscape.empty(); break                        // 'e'
     case 99: landscape.switchBotAvoidanceAlgorithm(); break   // 'c'
     case 115: landscape.switchSpawnMode(); break              // 's'
@@ -32,6 +31,7 @@ var $spawnBotBtn = $('#spawn-bot-btn')
 
 var $spawnRateField = $('#spawn-rate-field')
 var $anxietyLevelField = $('#anxiety-level-field')
+var $trailMode = $('#trail-mode')
 
 var $landscapeSizeField = $('#landscape-size-field')
 var $landscapeDensityField = $('#landscape-density-field')
@@ -108,6 +108,10 @@ bindSanitizerToNumberInput($spawnRateField, false, function (spawnRate) {
 bindSanitizerToNumberInput($anxietyLevelField, false, function (anxietyLevel) {
   anxietyLevel = anxietyLevel || +$anxietyLevelField.attr('min')
   landscape.setOverallAnxietyLevel(anxietyLevel)
+})
+
+$trailMode.change(function () {
+  landscape.trailMode = $(this).val()
 })
 
 // helper fxns

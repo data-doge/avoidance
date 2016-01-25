@@ -8,7 +8,7 @@ var rotate = require('rotate-array')
 
 var Landscape = stampit({
   refs: {
-    trailModes: ['fade', 'full', 'none'],
+    trailMode: 'fade',
     isOn: true,
     collisionsAvoided: 0,
     overallBotAnxietyLevel: 20,
@@ -42,7 +42,7 @@ var Landscape = stampit({
       })
     },
     update: function () {
-      switch (this.trailMode()) {
+      switch (this.trailMode) {
         case 'none': this.clearCanvas(); break
         case 'fade':
           this.ctx.fillStyle = 'rgba(0,0,0,0.1)'
@@ -61,9 +61,6 @@ var Landscape = stampit({
     toggleAnimation: function () {
       this.isOn = !this.isOn
       if (this.isOn) { this.animate() }
-    },
-    switchTrailMode: function () {
-      this.trailModes = rotate(this.trailModes, 1)
     },
     switchSpawnMode: function () {
       this.spawnCoords = this.getCenterCoords()
@@ -163,9 +160,6 @@ var Landscape = stampit({
     },
     updateBotCount: function () {
       this.$botCounter.text(this.bots.length)
-    },
-    trailMode: function () {
-      return this.trailModes[0]
     },
     spawnMode: function () {
       return this.spawnModes[0]
