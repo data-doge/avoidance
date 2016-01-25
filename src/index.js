@@ -30,6 +30,8 @@ var $clearBtn = $('#clear-btn')
 var $restartBtn = $('#restart-btn')
 var $spawnBotBtn = $('#spawn-bot-btn')
 
+var $spawnRateField = $('#spawn-rate-field')
+
 var $landscapeSizeField = $('#landscape-size-field')
 var $landscapeDensityField = $('#landscape-density-field')
 var $maxDensityIndicator = $('#max-density-indicator')
@@ -96,6 +98,10 @@ $spawnBotBtn.mousedown(function () {
   }, 5)
 }).mouseup(function () {
   clearInterval(spawnInterval)
+})
+
+bindSanitizerToNumberInput($spawnRateField, false, function (spawnRate) {
+  landscape.spawnRate = spawnRate || 1
 })
 
 // helper fxns
