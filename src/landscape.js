@@ -9,11 +9,11 @@ var rotate = require('rotate-array')
 var Landscape = stampit({
   refs: {
     trailMode: 'fade',
+    spawnMode: 'random',
     isOn: true,
     collisionsAvoided: 0,
     overallBotAnxietyLevel: 20,
     bots: [],
-    spawnModes: ['random', 'diagonal', 'spiral'],
     spawnRate: 1
   },
   init: function () {
@@ -62,10 +62,9 @@ var Landscape = stampit({
       this.isOn = !this.isOn
       if (this.isOn) { this.animate() }
     },
-    switchSpawnMode: function () {
-      this.spawnCoords = this.getCenterCoords()
-      this.polarSpawnParams = {radius: 0, radians: 0}
-      this.spawnModes = rotate(this.spawnModes, 1)
+    setSpawnMode: function (spawnMode) {
+      this.initializeSpawnParams()
+      this.spawnMode = spawnMode
     },
     empty: function () {
       this.initializeGrid()
@@ -101,8 +100,23 @@ var Landscape = stampit({
       var self = this
       _.times(numOfBots, function () { self.addBot() })
     },
+    initializeCanvas: function () {
+      $('#landscape').remove()
+      var $canvas = $('<canvas id="landscape" width="500" height="500"></canvas>')
+      $('#main-container').prepend($canvas)
+      this.ctx = $canvas[0].getContext('2d')
+      var scale = 500 / this.size
+      this.ctx.scale(scale, scale)
+    },
+    initializeGrid: function () {
+      this.grid = new Fixed2DArray(this.size, this.size, null)
+    },
+    initializeSpawnParams: function () {
+      this.spawnCoords = {r: 0, c: 0}
+      this.polarSpawnParams = {radius: 0, radians: 0, growing: true}
+    },
     calculateNextSpawnCoords: function () {
-      switch (this.spawnMode()) {
+      switch (this.spawnMode) {
         case 'random': this.spawnCoords = this.getRandCoords(); break
         case 'center': this.spawnCoords = this.getCenterCoords(); break
         case 'diagonal': this.spawnCoords = this.getNextDiagonalCoords(); break
@@ -161,28 +175,9 @@ var Landscape = stampit({
     updateBotCount: function () {
       this.$botCounter.text(this.bots.length)
     },
-    spawnMode: function () {
-      return this.spawnModes[0]
-    },
     clearCanvas: function () {
       this.ctx.clearRect(0, 0, this.size, this.size)
-    },
-    initializeCanvas: function () {
-      $('#landscape').remove()
-      var $canvas = $('<canvas id="landscape" width="500" height="500"></canvas>')
-      $('#main-container').prepend($canvas)
-      this.ctx = $canvas[0].getContext('2d')
-      var scale = 500 / this.size
-      this.ctx.scale(scale, scale)
-    },
-    initializeGrid: function () {
-      this.grid = new Fixed2DArray(this.size, this.size, null)
-    },
-    initializeSpawnParams: function () {
-      this.spawnCoords = {r: 0, c: 0}
-      this.polarSpawnParams = {radius: 0, radians: 0, growing: true}
     }
-
   }
 })
 

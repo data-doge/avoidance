@@ -32,6 +32,7 @@ var $spawnBotBtn = $('#spawn-bot-btn')
 var $spawnRateField = $('#spawn-rate-field')
 var $anxietyLevelField = $('#anxiety-level-field')
 var $trailMode = $('#trail-mode')
+var $spawnMode = $('#spawn-mode')
 
 var $landscapeSizeField = $('#landscape-size-field')
 var $landscapeDensityField = $('#landscape-density-field')
@@ -112,6 +113,10 @@ bindSanitizerToNumberInput($anxietyLevelField, false, function (anxietyLevel) {
 
 $trailMode.change(function () {
   landscape.trailMode = $(this).val()
+})
+
+$spawnMode.change(function () {
+  landscape.setSpawnMode($(this).val())
 })
 
 // helper fxns
