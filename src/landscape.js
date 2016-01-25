@@ -84,10 +84,14 @@ var Landscape = stampit({
       var max = 800000 / Math.pow(size, 2)
       return max > 50 ? 50 : max
     },
-    setOverallAnxietyLevel: function (anxietyLevel) {
-      Bot.fixed.refs.anxietyLevel = anxietyLevel
+    setAnxietyLevel: function (anxietyLevel) {
       _.each(this.bots, function (bot) {
         bot.anxietyLevel = anxietyLevel
+      })
+    },
+    setAvoidanceAlgorithm: function (avoidanceAlgorithm) {
+      _.each(this.bots, function (bot) {
+        bot.avoidanceAlgorithm = avoidanceAlgorithm
       })
     },
 
@@ -96,7 +100,6 @@ var Landscape = stampit({
       this.densityPercent = densityPercent || this.maxDensityPercent()
       var numOfCells = this.size * this.size
       var numOfBots = parseInt(numOfCells * this.densityPercent / 100)
-      Bot.fixed.refs.anxietyLevel = this.overallBotAnxietyLevel
       var self = this
       _.times(numOfBots, function () { self.addBot() })
     },

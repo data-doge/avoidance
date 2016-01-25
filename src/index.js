@@ -33,6 +33,7 @@ var $spawnRateField = $('#spawn-rate-field')
 var $anxietyLevelField = $('#anxiety-level-field')
 var $trailMode = $('#trail-mode')
 var $spawnMode = $('#spawn-mode')
+var $avoidanceAlgorithm = $('#avoidance-algorithm')
 
 var $landscapeSizeField = $('#landscape-size-field')
 var $landscapeDensityField = $('#landscape-density-field')
@@ -108,7 +109,7 @@ bindSanitizerToNumberInput($spawnRateField, false, function (spawnRate) {
 
 bindSanitizerToNumberInput($anxietyLevelField, false, function (anxietyLevel) {
   anxietyLevel = anxietyLevel || +$anxietyLevelField.attr('min')
-  landscape.setOverallAnxietyLevel(anxietyLevel)
+  landscape.setAnxietyLevel(anxietyLevel)
 })
 
 $trailMode.change(function () {
@@ -117,6 +118,10 @@ $trailMode.change(function () {
 
 $spawnMode.change(function () {
   landscape.setSpawnMode($(this).val())
+})
+
+$avoidanceAlgorithm.change(function () {
+  landscape.setAvoidanceAlgorithm($(this).val())
 })
 
 // helper fxns

@@ -6,12 +6,9 @@ var randomInt = require('random-int')
 
 var Bot = stampit({
   refs: {
-    anxietyLevel: 50,
-    colors: ["#F6F792", "#77C4D3", "#DAEDE2", "#EA2E49", "#FFFFFF"],
-    avoidanceAlgorithms: ['right', 'left', 'back', 'random'],
-    switchAvoidanceAlgorithm: function () {
-      this.avoidanceAlgorithms = rotate(this.avoidanceAlgorithms, 1)
-    }
+    avoidanceAlgorithm: 'right',
+    anxietyLevel: 20,
+    colors: ["#F6F792", "#77C4D3", "#DAEDE2", "#EA2E49", "#FFFFFF"]
   },
   init: function () {
     this.directions = rotate(['up', 'right', 'down', 'left'], randomInt(3))
@@ -35,7 +32,7 @@ var Bot = stampit({
              landscape.grid.get(coords.r, coords.c)
     },
     changeDirection: function () {
-      switch (this.currentAvoidanceAlgorithm()) {
+      switch (this.avoidanceAlgorithm) {
         case 'right': this.directions = rotate(this.directions, 3); break;
         case 'left': this.directions = rotate(this.directions, 1); break;
         case 'back': this.directions = rotate(this.directions, 2); break;
@@ -57,9 +54,6 @@ var Bot = stampit({
     // private
     currentDirection: function () {
       return this.directions[0]
-    },
-    currentAvoidanceAlgorithm: function () {
-      return this.avoidanceAlgorithms[0]
     },
     nextCoords: function () {
       var dc = 0, dr = 0
