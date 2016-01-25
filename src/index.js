@@ -5,15 +5,6 @@ var _ = require('lodash')
 var landscape = Landscape()
 landscape.animate()
 
-$(document).on('keypress', function (e) {
-  switch (e.keyCode) {
-    case 112: landscape.toggleAnimation(); break              // 'p'
-    case 101: landscape.empty(); break                        // 'e'
-    case 99: landscape.switchBotAvoidanceAlgorithm(); break   // 'c'
-    case 115: landscape.switchSpawnMode(); break              // 's'
-  }
-})
-
 // jQuery objects
 
 var $liveControlsPanel = $('#live-controls-panel')
