@@ -10,7 +10,6 @@ var Landscape = stampit({
   refs: {
     trailModes: ['fade', 'full', 'none'],
     isOn: true,
-    thingsCanDie: true,
     collisionsAvoided: 0,
     overallBotAnxietyLevel: 20,
     bots: [],
@@ -69,9 +68,6 @@ var Landscape = stampit({
       this.spawnCoords = this.getCenterCoords()
       this.polarSpawnParams = {radius: 0, radians: 0}
       this.spawnModes = rotate(this.spawnModes, 1)
-    },
-    toggleExistenceOfDeath: function () {
-      this.thingsCanDie = !this.thingsCanDie
     },
     empty: function () {
       this.initializeGrid()
@@ -138,7 +134,7 @@ var Landscape = stampit({
       for (var i = 0; i < 4; i++) {
         if (bot.isAboutToCollide()) {
           bot.changeDirection()
-          if (this.thingsCanDie) { bot.dieSlowly() }
+          bot.dieSlowly()
           this.collisionsAvoided++
           this.$collisionAvoidedCounter.text(this.collisionsAvoided)
         } else {
