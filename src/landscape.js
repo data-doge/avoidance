@@ -19,7 +19,8 @@ var Landscape = stampit({
   init: function () {
     this.$botCounter = $('#bot-count')
     this.$collisionAvoidedCounter = $('#collisions-avoided-count')
-    this.initialize({size: 100, densityPercent: this.maxDensityPercent(100)})
+    var initialSize = 100
+    this.initialize({size: size, densityPercent: this.maxDensityPercent(initialSize)})
   },
 
   methods: {

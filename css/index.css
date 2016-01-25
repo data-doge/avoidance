@@ -135,7 +135,7 @@ body {
 /* transitions */
 
 .brighten-on-hover {
-  opacity: 0.9 !important;
+  opacity: 0.8 !important;
   transition: 0.5s;
 }
 
