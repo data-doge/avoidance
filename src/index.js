@@ -6,9 +6,8 @@ var landscape = Landscape()
 landscape.animate()
 
 $(document).on('keypress', function (e) {
-  // console.log('e.keyCode: ', e.keyCode)
   switch (e.keyCode) {
-    case 97: landscape.addBot(1); break                       // 'a'
+    case 97: landscape.addBot(); break                       // 'a'
     case 112: landscape.toggleAnimation(); break              // 'p'
     case 116: landscape.switchTrailMode(); break              // 't'
     case 101: landscape.empty(); break                        // 'e'
@@ -29,6 +28,7 @@ var $startBtn = $('#start-btn')
 var $stopBtn = $('#stop-btn')
 var $clearBtn = $('#clear-btn')
 var $restartBtn = $('#restart-btn')
+var $spawnBotBtn = $('#spawn-bot-btn')
 
 var $landscapeSizeField = $('#landscape-size-field')
 var $landscapeDensityField = $('#landscape-density-field')
@@ -80,10 +80,16 @@ $completeRedesignLandscapeBtn.click(function () {
   var size = parseInt($landscapeSizeField.val()) || 1
   var densityPercent = parseFloat($landscapeDensityField.val()).toFixed(1)
   landscape.empty()
-  landscape.initialize({
-    size: size,
-    densityPercent: densityPercent
-  })
+  landscape.initialize({ size: size, densityPercent: densityPercent })
+})
+
+var spawnInterval;
+$spawnBotBtn.mousedown(function () {
+  spawnInterval = setInterval(function () {
+    landscape.addBot()
+  }, 5)
+}).mouseup(function () {
+  clearInterval(spawnInterval)
 })
 
 // helper fxns

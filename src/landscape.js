@@ -13,7 +13,8 @@ var Landscape = stampit({
     collisionsAvoided: 0,
     overallBotAnxietyLevel: 20,
     bots: [],
-    spawnModes: ['random', 'diagonal', 'spiral']
+    spawnModes: ['random', 'diagonal', 'spiral'],
+    spawnRate: 1
   },
   init: function () {
     this.$botCounter = $('#bot-count')
@@ -29,10 +30,10 @@ var Landscape = stampit({
       this.initializeSpawnParams()
       this.initializeBots(params.densityPercent)
     },
-    addBot: function (num) {
+    addBot: function () {
       this.calculateNextSpawnCoords()
       var self = this
-      _.times(num || 1, function () {
+      _.times(this.spawnRate, function () {
         var bot = Bot(_.merge(self.spawnCoords, {landscape: self}))
         self.bots.push(bot)
         self.grid.set(bot.r, bot.c, bot)
