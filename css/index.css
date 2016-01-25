@@ -1,25 +1,176 @@
+/* general */
+
 html, body {
   position: relative;
   height: 100%;
+}
+
+body {
+  cursor: crosshair;
   background: black;
   font-family: 'Roboto', sans-serif;
-}
-
-canvas {
-  position: relative;
-  display: block;
-  margin: 0 auto;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.container {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
   color: white;
   letter-spacing: 2px;
   font-size: 12px;
-  bottom: 70px;
+}
+
+#main-container {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+#landscape {
+  width: 500px;
+  height: 500px;
+}
+
+#controls {
+  border-left: 1px solid white;
+  padding-left: 30px;
+  width: 300px;
+  height: 500px;
+  margin-left: 30px;
+}
+
+.panel-divider {
+  border-bottom: 1px solid white;
+  width: 200px;
+  margin-bottom: 15px;
+  margin-top: 5px;
+}
+
+.panel-indicator {
+  margin-bottom: 5px;
+}
+
+.input-container {
+  margin-bottom: 10px;
+  opacity: 0.85;
+}
+
+.btn {
+  cursor: pointer;
+  display: inline-block;
+  padding: 4px 8px;
+  border: 1px solid white;
   text-align: center;
+  margin-bottom: 10px;
+}
+
+.input-label {
+  float: left;
+  border: 1px solid white;
+  padding: 4px 8px;
+  background: #77C4D3;
+  border-right: none;
+}
+
+.number-input {
+  float: left;
+  padding: 4px 8px;
+  background: transparent;
+  border: 1px solid white;
+  width: 40px;
+  text-align: center;
+}
+
+.select-input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 1px solid white;
+  background: transparent;
+  padding: 4px 8px;
+  border-radius: 0;
+  cursor: pointer;
+  text-align: center;
+}
+
+.input-helper-text {
+  display: inline-block;
+  padding: 4px 8px;
+}
+
+/* live controls panel */
+
+#live-controls-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+#redesign-landscape-btn {
+  border: 1px solid #F6F792;
+  color: #F6F792;
+}
+
+#start-btn {
+  display: none;
+  border: 1px solid #99FF00;
+  color: #99FF00;
+}
+
+#stop-btn {
+  border: 1px solid pink;
+  color: pink;
+}
+
+/* redesign landscape panel */
+
+#redesign-landscape-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+#redesign-landscape-panel {
+  display: none;
+}
+
+#complete-redesign-landscape-btn {
+  border: 1px solid #99FF00;
+  color: #99FF00;
+  margin-right: 10px;
+}
+
+#cancel-redesign-landscape-btn {
+  border: 1px solid pink;
+  color: pink;
+}
+
+/* transitions */
+
+.brighten-on-hover {
+  opacity: 0.8 !important;
+  transition: 0.5s;
+}
+
+.brighten-on-hover:hover {
+  opacity: 1 !important;
+}
+
+/* overrides */
+
+input, select {
+  letter-spacing: inherit;
+  font-size: inherit;
+}
+
+input[type="number"]:focus {
+  outline: none;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+select:focus {
+  outline: none;
 }

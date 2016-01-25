@@ -8,31 +8,33 @@ var rotate = require('rotate-array')
 
 var Landscape = stampit({
   refs: {
-    trailModes: ['fade', 'full', 'none'],
-    ctx: $('#landscape')[0].getContext('2d'),
+    trailMode: 'fade',
+    spawnMode: 'random',
     isOn: true,
-    thingsCanDie: true,
     collisionsAvoided: 0,
-    size: 500,
-    densityPercent: 0,
+    overallBotAnxietyLevel: 20,
     bots: [],
-    spawnModes: ['random', 'center', 'diagonal', 'spiral'],
-    spawnCoords: {r: 0, c: 0},
-    polarSpawnParams: {radius: 0, radians: 0, growing: true}
+    spawnRate: 1
   },
   init: function () {
     this.$botCounter = $('#bot-count')
     this.$collisionAvoidedCounter = $('#collisions-avoided-count')
-    this.scale = 500 / this.size
-    this.ctx.scale(this.scale, this.scale)
-    this.grid = new Fixed2DArray(this.size, this.size, null)
-    this.initializeBots()
+    var initialSize = 100
+    this.initialize({size: initialSize, densityPercent: this.maxDensityPercent(initialSize) / 2})
   },
   methods: {
+    initialize: function (params) {
+      this.size = params.size
+      this.initializeCanvas()
+      this.initializeGrid()
+      this.initializeSpawnParams()
+      this.initializeBots(params.densityPercent)
+    },
     addBot: function (num) {
+      num = num || this.spawnRate
       this.calculateNextSpawnCoords()
       var self = this
-      _.times(num || 1, function () {
+      _.times(num, function () {
         var bot = Bot(_.merge(self.spawnCoords, {landscape: self}))
         self.bots.push(bot)
         self.grid.set(bot.r, bot.c, bot)
@@ -41,8 +43,8 @@ var Landscape = stampit({
       })
     },
     update: function () {
-      switch (this.trailMode()) {
-        case 'none': this.clear(); break
+      switch (this.trailMode) {
+        case 'none': this.clearCanvas(); break
         case 'fade':
           this.ctx.fillStyle = 'rgba(0,0,0,0.1)'
           this.ctx.fillRect(0, 0, this.size, this.size)
@@ -61,36 +63,64 @@ var Landscape = stampit({
       this.isOn = !this.isOn
       if (this.isOn) { this.animate() }
     },
-    switchTrailMode: function () {
-      this.trailModes = rotate(this.trailModes, 1)
+    setSpawnMode: function (spawnMode) {
+      this.initializeSpawnParams()
+      this.spawnMode = spawnMode
     },
-    switchSpawnMode: function () {
-      this.spawnCoords = this.getCenterCoords()
-      this.polarSpawnParams = {radius: 0, radians: 0}
-      this.spawnModes = rotate(this.spawnModes, 1)
-      console.log(this.spawnMode())
-    },
-    toggleExistenceOfDeath: function () {
-      this.thingsCanDie = !this.thingsCanDie
-    },
-    reset: function () {
-      this.grid = new Fixed2DArray(this.size, this.size, null)
-      this.clear()
+    empty: function () {
+      this.initializeGrid()
+      this.clearCanvas()
       this.bots = []
       this.updateBotCount()
     },
     switchBotAvoidanceAlgorithm: function () {
       Bot.fixed.refs.switchAvoidanceAlgorithm()
     },
+    restart: function () {
+      this.empty()
+      this.initializeBots()
+    },
+    maxDensityPercent: function (size) {
+      size = size || this.size
+      var max = 800000 / Math.pow(size, 2)
+      return max > 50 ? 50 : max
+    },
+    setAnxietyLevel: function (anxietyLevel) {
+      _.each(this.bots, function (bot) {
+        bot.anxietyLevel = anxietyLevel
+      })
+    },
+    setAvoidanceAlgorithm: function (avoidanceAlgorithm) {
+      _.each(this.bots, function (bot) {
+        bot.avoidanceAlgorithm = avoidanceAlgorithm
+      })
+    },
 
     // private
-    initializeBots: function () {
+    initializeBots: function (densityPercent) {
+      this.densityPercent = densityPercent || this.maxDensityPercent() / 2
       var numOfCells = this.size * this.size
       var numOfBots = parseInt(numOfCells * this.densityPercent / 100)
-      _.times(numOfBots, this.addBot.bind(this))
+      var self = this
+      _.times(numOfBots, function () { self.addBot(1) })
+    },
+    initializeCanvas: function () {
+      $('#landscape').remove()
+      var $canvas = $('<canvas id="landscape" width="500" height="500"></canvas>')
+      $('#main-container').prepend($canvas)
+      this.ctx = $canvas[0].getContext('2d')
+      var scale = 500 / this.size
+      this.ctx.scale(scale, scale)
+    },
+    initializeGrid: function () {
+      this.grid = new Fixed2DArray(this.size, this.size, null)
+    },
+    initializeSpawnParams: function () {
+      this.spawnCoords = {r: 0, c: 0}
+      this.polarSpawnParams = {radius: 0, radians: 0, growing: true}
     },
     calculateNextSpawnCoords: function () {
-      switch (this.spawnMode()) {
+      switch (this.spawnMode) {
         case 'random': this.spawnCoords = this.getRandCoords(); break
         case 'center': this.spawnCoords = this.getCenterCoords(); break
         case 'diagonal': this.spawnCoords = this.getNextDiagonalCoords(); break
@@ -126,7 +156,7 @@ var Landscape = stampit({
       for (var i = 0; i < 4; i++) {
         if (bot.isAboutToCollide()) {
           bot.changeDirection()
-          if (this.thingsCanDie) { bot.dieSlowly() }
+          bot.dieSlowly()
           this.collisionsAvoided++
           this.$collisionAvoidedCounter.text(this.collisionsAvoided)
         } else {
@@ -149,13 +179,7 @@ var Landscape = stampit({
     updateBotCount: function () {
       this.$botCounter.text(this.bots.length)
     },
-    trailMode: function () {
-      return this.trailModes[0]
-    },
-    spawnMode: function () {
-      return this.spawnModes[0]
-    },
-    clear: function () {
+    clearCanvas: function () {
       this.ctx.clearRect(0, 0, this.size, this.size)
     }
   }

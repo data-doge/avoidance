@@ -8,11 +8,94 @@
 </head>
 
 <body>
-  <canvas id="landscape" width="500" height="500"></canvas>
-  <div class="container">
-    <div>number of bots: <span id="bot-count">0</span></div>
-    <br />
-    <div>collisions avoided: <span id="collisions-avoided-count">0</span></div>
+  <div id="main-container">
+    <div id="landscape"></div>
+    <div id="controls">
+      <div id="live-controls-panel">
+        <div class="btn brighten-on-hover" id="redesign-landscape-btn">redesign landscape</div>
+
+        <div class="panel-divider"></div>
+
+        <div class="btn brighten-on-hover" id="start-btn">start</div>
+        <div class="btn brighten-on-hover" id="stop-btn">stop</div>
+
+        <div class="btn brighten-on-hover" id="clear-btn">clear</div>
+
+        <div class="btn brighten-on-hover" id="restart-btn">restart</div>
+
+        <div class="panel-divider"></div>
+
+        <div class="input-container brighten-on-hover">
+          <label class="input-label" for="anxiety-level">anxiety level</label>
+          <input class="number-input" id="anxiety-level-field" type="number" name="anxiety-level" value="20" placeholder="0" min="0" max="100" />
+          <div class="input-helper-text">(0 - 100)</div>
+        </div>
+
+        <div class="input-container brighten-on-hover">
+          <label class="input-label" for="trail-mode">trail mode</label>
+          <select class="select-input" id="trail-mode" name="trail-mode">
+            <option value="none">none</option>
+            <option value="fade" selected>fade</option>
+            <option value="full">full</option>
+          </select>
+        </div>
+
+        <div class="input-container brighten-on-hover">
+          <label class="input-label" for="avoidance-algorithm">avoidance algorithm</label>
+          <select class="select-input" id="avoidance-algorithm" name="avoidance-algorithm">
+            <option value="right" selected>pivot right</option>
+            <option value="left">pivot left</option>
+            <option value="back">turn around</option>
+            <option value="random">random</option>
+          </select>
+        </div>
+
+        <div class="panel-divider"></div>
+
+        <div class="input-container brighten-on-hover">
+          <label class="input-label" for="spawn-rate">spawn rate</label>
+          <input class="number-input" id="spawn-rate-field" type="number" name="spawn-rate" value="1" placeholder="1" min="1" max="4" />
+          <div class="input-helper-text">(1 - 4)</div>
+        </div>
+
+        <div class="input-container brighten-on-hover">
+          <label class="input-label" for="spawn-mode">spawn mode</label>
+          <select class="select-input" id="spawn-mode" name="spawn-mode">
+            <option value="random" selected>random</option>
+            <option value="diagonal">diagonal</option>
+            <option value="spiral">spiral</option>
+          </select>
+        </div>
+
+        <div class="btn brighten-on-hover" id="spawn-bot-btn">spawn bot</div>
+
+        <div class="panel-divider"></div>
+
+        <div class="panel-indicator">number of bots: <span id="bot-count">0</span></div>
+
+        <div class="panel-indicator">collisions avoided: <span id="collisions-avoided-count">0</span></div>
+      </div>
+
+      <div id="redesign-landscape-panel">
+        <div class="input-container brighten-on-hover">
+          <label class="input-label" for="size">size</label>
+          <input class="number-input" id="landscape-size-field" type="number" name="size" value="100" placeholder="1" min="1" max="1000" />
+          <div class="input-helper-text">(1 - 1000)</div>
+        </div>
+
+        <div class="input-container brighten-on-hover">
+          <label class="input-label" for="density">density</label>
+          <input class="number-input" id="landscape-density-field" type="number" name="density" value="50.00" min="0.00" max="50.00" />
+          <div class="input-helper-text">(0.00 - <span id="max-density-indicator">50.00</span>)</div>
+        </div>
+
+        <div id="redesign-landscape-submit-btns">
+          <div class="btn brighten-on-hover" id="complete-redesign-landscape-btn">mhm</div>
+          <div class="btn brighten-on-hover" id="cancel-redesign-landscape-btn">nvm</div>
+        </div>
+      </div>
+    </div>
   </div>
+
   <script type="text/javascript" src="bundle.js"></script>
 </body>
