@@ -14,9 +14,7 @@ var Landscape = stampit({
     collisionsAvoided: 0,
     overallBotAnxietyLevel: 20,
     bots: [],
-    spawnModes: ['random', 'diagonal', 'spiral'],
-    spawnCoords: {r: 0, c: 0},
-    polarSpawnParams: {radius: 0, radians: 0, growing: true}
+    spawnModes: ['random', 'diagonal', 'spiral']
   },
   init: function () {
     this.$botCounter = $('#bot-count')
@@ -26,14 +24,10 @@ var Landscape = stampit({
 
   methods: {
     initialize: function (params) {
-      $('#landscape').remove()
-      var $canvas = $('<canvas id="landscape" width="500" height="500"></canvas>')
-      $('#main-container').prepend($canvas)
       this.size = params.size
-      this.ctx = $canvas[0].getContext('2d')
-      this.scale = 500 / this.size
-      this.ctx.scale(this.scale, this.scale)
-      this.grid = new Fixed2DArray(this.size, this.size, null)
+      this.initializeCanvas()
+      this.initializeGrid()
+      this.initializeSpawnParams()
       this.initializeBots(params.densityPercent)
     },
     addBot: function (num) {
@@ -75,13 +69,12 @@ var Landscape = stampit({
       this.spawnCoords = this.getCenterCoords()
       this.polarSpawnParams = {radius: 0, radians: 0}
       this.spawnModes = rotate(this.spawnModes, 1)
-      console.log(this.spawnMode())
     },
     toggleExistenceOfDeath: function () {
       this.thingsCanDie = !this.thingsCanDie
     },
     empty: function () {
-      this.grid = new Fixed2DArray(this.size, this.size, null)
+      this.initializeGrid()
       this.clearCanvas()
       this.bots = []
       this.updateBotCount()
@@ -176,7 +169,23 @@ var Landscape = stampit({
     },
     clearCanvas: function () {
       this.ctx.clearRect(0, 0, this.size, this.size)
+    },
+    initializeCanvas: function () {
+      $('#landscape').remove()
+      var $canvas = $('<canvas id="landscape" width="500" height="500"></canvas>')
+      $('#main-container').prepend($canvas)
+      this.ctx = $canvas[0].getContext('2d')
+      var scale = 500 / this.size
+      this.ctx.scale(scale, scale)
+    },
+    initializeGrid: function () {
+      this.grid = new Fixed2DArray(this.size, this.size, null)
+    },
+    initializeSpawnParams: function () {
+      this.spawnCoords = {r: 0, c: 0}
+      this.polarSpawnParams = {radius: 0, radians: 0, growing: true}
     }
+
   }
 })
 
