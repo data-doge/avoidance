@@ -20,7 +20,7 @@ var Landscape = stampit({
     this.$botCounter = $('#bot-count')
     this.$collisionAvoidedCounter = $('#collisions-avoided-count')
     var initialSize = 100
-    this.initialize({size: initialSize, densityPercent: this.maxDensityPercent(initialSize)})
+    this.initialize({size: initialSize, densityPercent: this.maxDensityPercent(initialSize) / 2})
   },
   methods: {
     initialize: function (params) {
@@ -98,7 +98,7 @@ var Landscape = stampit({
 
     // private
     initializeBots: function (densityPercent) {
-      this.densityPercent = densityPercent || this.maxDensityPercent()
+      this.densityPercent = densityPercent || this.maxDensityPercent() / 2
       var numOfCells = this.size * this.size
       var numOfBots = parseInt(numOfCells * this.densityPercent / 100)
       var self = this

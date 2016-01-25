@@ -68,7 +68,7 @@ bindSanitizerToNumberInput($landscapeSizeField, false, function (size) {
   var maxDensityPercent = landscape.maxDensityPercent(size).toFixed(2)
   $landscapeDensityField.attr('max', maxDensityPercent)
   $maxDensityIndicator.text(maxDensityPercent)
-  $landscapeDensityField.val(maxDensityPercent)
+  $landscapeDensityField.val(maxDensityPercent / 2)
 })
 
 bindSanitizerToNumberInput($landscapeDensityField, true)
