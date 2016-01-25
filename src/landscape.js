@@ -30,10 +30,11 @@ var Landscape = stampit({
       this.initializeSpawnParams()
       this.initializeBots(params.densityPercent)
     },
-    addBot: function () {
+    addBot: function (num) {
+      num = num || this.spawnRate
       this.calculateNextSpawnCoords()
       var self = this
-      _.times(this.spawnRate, function () {
+      _.times(num, function () {
         var bot = Bot(_.merge(self.spawnCoords, {landscape: self}))
         self.bots.push(bot)
         self.grid.set(bot.r, bot.c, bot)
@@ -101,7 +102,7 @@ var Landscape = stampit({
       var numOfCells = this.size * this.size
       var numOfBots = parseInt(numOfCells * this.densityPercent / 100)
       var self = this
-      _.times(numOfBots, function () { self.addBot() })
+      _.times(numOfBots, function () { self.addBot(1) })
     },
     initializeCanvas: function () {
       $('#landscape').remove()

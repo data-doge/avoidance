@@ -7,7 +7,6 @@ landscape.animate()
 
 $(document).on('keypress', function (e) {
   switch (e.keyCode) {
-    case 97: landscape.addBot(); break                       // 'a'
     case 112: landscape.toggleAnimation(); break              // 'p'
     case 101: landscape.empty(); break                        // 'e'
     case 99: landscape.switchBotAvoidanceAlgorithm(); break   // 'c'
