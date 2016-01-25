@@ -22,7 +22,6 @@ var Landscape = stampit({
     var initialSize = 100
     this.initialize({size: initialSize, densityPercent: this.maxDensityPercent(initialSize)})
   },
-
   methods: {
     initialize: function (params) {
       this.size = params.size
@@ -88,6 +87,12 @@ var Landscape = stampit({
       size = size || this.size
       var max = 800000 / Math.pow(size, 2)
       return max > 50 ? 50 : max
+    },
+    setOverallAnxietyLevel: function (anxietyLevel) {
+      Bot.fixed.refs.anxietyLevel = anxietyLevel
+      _.each(this.bots, function (bot) {
+        bot.anxietyLevel = anxietyLevel
+      })
     },
 
     // private

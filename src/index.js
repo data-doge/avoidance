@@ -31,6 +31,7 @@ var $restartBtn = $('#restart-btn')
 var $spawnBotBtn = $('#spawn-bot-btn')
 
 var $spawnRateField = $('#spawn-rate-field')
+var $anxietyLevelField = $('#anxiety-level-field')
 
 var $landscapeSizeField = $('#landscape-size-field')
 var $landscapeDensityField = $('#landscape-density-field')
@@ -101,7 +102,12 @@ $spawnBotBtn.mousedown(function () {
 })
 
 bindSanitizerToNumberInput($spawnRateField, false, function (spawnRate) {
-  landscape.spawnRate = spawnRate || 1
+  landscape.spawnRate = spawnRate || +$spawnRateField.attr('min')
+})
+
+bindSanitizerToNumberInput($anxietyLevelField, false, function (anxietyLevel) {
+  anxietyLevel = anxietyLevel || +$anxietyLevelField.attr('min')
+  landscape.setOverallAnxietyLevel(anxietyLevel)
 })
 
 // helper fxns
